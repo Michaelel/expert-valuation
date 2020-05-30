@@ -28,6 +28,7 @@
               "src/assets"
             ],
             "styles": [
+              "src/custom-theme.sass",
               "src/styles.sass"
             ],
             "scripts": []
@@ -123,6 +124,10 @@
           }
         }
       }
-    }},
-  "defaultProject": "expert-valuation-ui"
+    }
+  },
+  "defaultProject": "expert-valuation-ui",
+  "cli": {
+    "analytics": false
+  }
 }
