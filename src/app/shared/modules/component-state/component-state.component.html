@@ -1,0 +1,45 @@
+<ng-container [ngSwitch]="state">
+
+    <!-- Loading data started -->
+    <ng-container *ngSwitchCase="componentStateEnum.Loading">
+        <div class="loader" [ngStyle]="styles" layout="row">
+            <mat-spinner [diameter]="loaderDiameter"></mat-spinner>
+        </div>
+    </ng-container>
+    <!-- Loading data finished -->
+
+    <!-- Data loading was successful and there is data to display. -->
+    <ng-container *ngSwitchCase="componentStateEnum.Success">
+        <ng-content></ng-content>
+    </ng-container>
+
+    <!-- Data loading was successful, but no data to display. -->
+    <ng-container *ngSwitchCase="componentStateEnum.Empty">
+        <div class="error-container" [ngStyle]="styles">
+            <mat-icon class="text-color-secondary empty-icon">face</mat-icon>
+            <div #emptyBlock>
+                <ng-content select="[text-if-empty]"></ng-content>
+            </div>
+
+            <ng-container *ngIf="emptyBlock.childNodes.length == 0">
+                <span>Данные для отображения отсутствуют</span>
+            </ng-container>
+        </div>
+    </ng-container>
+
+    <!-- An error occurred during the download. -->
+    <ng-container *ngSwitchCase="componentStateEnum.Error">
+        <div class="error-container" [ngStyle]="styles">
+            <mat-icon class="error-icon text-color-secondary">mood_bad</mat-icon>
+            <div>Уппс.. Возникла
+                ошибка при загрузке данных
+            </div>
+            <button (click)="getData()"
+                    *ngIf="getData"
+                    color="accent"
+                    class="load-data-btn"
+                    mat-button>Попытаться еще раз
+            </button>
+        </div>
+    </ng-container>
+</ng-container>

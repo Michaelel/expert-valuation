@@ -1,0 +1,9 @@
+<mat-card class="login-form">
+    <div class="login-form__logo"></div>
+    <h1 class="login-form__title">{{ authService.isLoginMode ? 'Авторизация' : 'Регистрация' }}</h1>
+    <mat-card-content>
+        <app-login *ngIf="authService.isLoginMode"></app-login>
+        <app-signup *ngIf="!authService.isLoginMode"></app-signup>
+    </mat-card-content>
+</mat-card>
+

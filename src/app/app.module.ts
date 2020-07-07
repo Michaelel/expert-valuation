@@ -3,7 +3,10 @@ import { NgModule } from '@angular/core';
 
 import { AppComponent } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { MaterialModule } from './shared/material/material.module';
+import { AppRouting } from './app.routing';
+import { MaterialModule } from './shared/modules/material/material.module';
+import { ChildrenOutletContexts } from '@angular/router';
+import { HttpClientModule } from '@angular/common/http';
 
 @NgModule({
               declarations: [
@@ -13,6 +16,8 @@ import { MaterialModule } from './shared/material/material.module';
                   BrowserModule,
                   BrowserAnimationsModule,
                   MaterialModule,
+                  AppRouting,
+                  HttpClientModule,
               ],
               providers: [],
               bootstrap: [AppComponent],

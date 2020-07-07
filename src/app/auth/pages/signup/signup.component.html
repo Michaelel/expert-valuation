@@ -1,0 +1,66 @@
+<form [formGroup]="signupForm">
+    <mat-form-field>
+        <input matInput
+               formControlName="email"
+               ngDefaultControl
+               type="email"
+               placeholder="Введите email">
+    </mat-form-field>
+
+    <mat-form-field>
+        <input matInput
+               formControlName="firstName"
+               ngDefaultControl
+               placeholder="Введите имя">
+    </mat-form-field>
+
+    <mat-form-field>
+        <input matInput
+               formControlName="lastName"
+               ngDefaultControl
+               placeholder="Введите фамилию">
+    </mat-form-field>
+
+    <mat-form-field>
+        <input matInput
+               formControlName="phone"
+               ngDefaultControl
+               placeholder="Введите номер телефона">
+    </mat-form-field>
+
+    <mat-form-field>
+        <input matInput
+               formControlName="password"
+               ngDefaultControl
+               type="password"
+               autocomplete="off"
+               placeholder="Введите пароль">
+    </mat-form-field>
+
+    <mat-form-field>
+        <input matInput
+               formControlName="passwordRepeat"
+               ngDefaultControl
+               type="password"
+               autocomplete="off"
+               placeholder="Повторите пароль">
+    </mat-form-field>
+
+    <mat-radio-group formControlName="role">
+        <mat-radio-button [value]="rolesEnum.Expert">Експерт</mat-radio-button>
+        <mat-radio-button [value]="rolesEnum.User">Пользователь</mat-radio-button>
+    </mat-radio-group>
+
+    <a (click)="goToLogin()"
+       class="login-form__forget">Войти в существующий аккаунт</a>
+
+</form>
+
+<button mat-raised-button
+        class="text-uppercase"
+        ngClass="login-form__submit"
+        type="submit"
+        color="primary"
+        [disabled]="authService.isAuthInProgress || signupForm.invalid"
+        (click)="authService.signup(signupForm.value)">Войти
+</button>

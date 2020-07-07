@@ -1,0 +1,31 @@
+<form [formGroup]="loginForm">
+    <mat-form-field>
+        <input matInput
+               formControlName="email"
+               ngDefaultControl
+               type="email"
+               placeholder="Введите email">
+    </mat-form-field>
+
+    <mat-form-field>
+        <input matInput
+               formControlName="password"
+               ngDefaultControl
+               type="password"
+               autocomplete="off"
+               placeholder="Введите пароль">
+    </mat-form-field>
+
+    <a (click)="goToSignup()"
+       class="login-form__forget">Перейти к регистрации</a>
+
+</form>
+
+<button mat-raised-button
+        class="text-uppercase"
+        ngClass="login-form__submit"
+        type="submit"
+        color="primary"
+        [disabled]="authService.isAuthInProgress || loginForm.invalid"
+        (click)="authService.login(loginForm.value)">Войти
+</button>

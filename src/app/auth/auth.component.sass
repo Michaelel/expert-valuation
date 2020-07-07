@@ -1,0 +1,141 @@
+@import '../../assets/style/palette'
+
+
+\:host
+  display: flex
+  width: 100%
+  flex-direction: column
+  justify-content: center
+  align-items: center
+  height: 100vh
+
+.full-height
+  height: 100vh
+  display: flex
+  flex-direction: column
+  justify-content: center
+  text-align: center
+
+.cancel-btn
+  margin-right: 10px
+
+
+\:host
+  ::ng-deep app-message
+    text-align: left
+    margin-bottom: 25px
+    display: block
+
+.card-content-loading
+  position: absolute
+  top: 0
+  left: 0
+  bottom: 0
+  right: 0
+  z-index: 2
+
+.card-content-loading::before
+  content: ""
+  position: absolute
+  top: 0
+  left: 0
+  bottom: 0
+  right: 0
+  background-color: rgba(0, 0, 0, .2)
+
+.spinner
+  position: absolute
+  top: 50%
+  left: 50%
+  margin-left: -50px
+  margin-top: -75px
+
+.login-form
+  width: 320px
+  text-align: center
+  box-sizing: border-box
+  @media (max-width: 480px)
+    top: 0
+    left: 0
+    bottom: 0
+    right: 0
+  &__logo
+    display: block
+    height: 64px
+    width: 64px
+    margin: auto
+    margin-top: -32px !important // to rewrite material style
+    background: url('../../assets/img/logo.png')
+    background-size: contain
+  &__title
+    margin: 20px 0
+    font-weight: lighter
+  &__forget
+    float: right
+    cursor: pointer
+    text-decoration: none
+    font-size: 12px
+    color: $primary-color-dark !important
+  &__submit
+    width: 100%
+    text-transform: uppercase
+    margin-top: 20px !important
+
+mat-form-field
+  width: 100%
+
+.credits
+  z-index: 1000
+  font-size: x-small
+  color: #bbbbbb
+
+.activity-login
+  text-align: left
+  cursor: default
+
+  .login-title
+    font-size: 13px
+    color: #adadad
+    margin-bottom: 2px
+
+  .logged-user
+    color: #c5c5c5
+    border-bottom: 1px solid
+    font-weight: 300
+
+.control-block
+  display: flex
+  flex-direction: column
+  align-items: flex-end
+  margin-bottom: 25px
+
+.code-input
+  width: 40%
+
+.otp-input
+  width: 100%
+
+.actions-container
+  display: flex
+  justify-content: flex-end
+
+.w-100
+  width: 100%
+
+.resend-btn
+  border: none
+  background: none
+  color: $primary-color-dark !important
+  font-size: 12px
+
+  &:disabled
+    color: #333 !important
+    cursor: not-allowed
+
+.to-otp-btn
+  display: flex
+  margin-bottom: 20px
+  justify-content: flex-end
+
+.notify-with
+  width: 100%
