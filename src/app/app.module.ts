@@ -5,8 +5,9 @@ import { AppComponent } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { AppRouting } from './app.routing';
 import { MaterialModule } from './shared/modules/material/material.module';
-import { ChildrenOutletContexts } from '@angular/router';
 import { HttpClientModule } from '@angular/common/http';
+import { ProfileModule } from './profile/profile.module';
+import { HeaderModule } from './header/header.module';
 
 @NgModule({
               declarations: [
@@ -18,6 +19,8 @@ import { HttpClientModule } from '@angular/common/http';
                   MaterialModule,
                   AppRouting,
                   HttpClientModule,
+                  ProfileModule,
+                  HeaderModule,
               ],
               providers: [],
               bootstrap: [AppComponent],

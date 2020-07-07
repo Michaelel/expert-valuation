@@ -6,7 +6,7 @@ export interface UserInterface {
     lastName: string;
     email: string;
     phone: string;
-    role: RolesEnum;
-    isVerified: boolean;
-    tokenExpirationDate: string;
+    role?: RolesEnum;
+    isVerified?: boolean;
+    tokenExpirationDate?: string;
 }

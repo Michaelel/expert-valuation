@@ -1,19 +1,29 @@
+@import "../../../../assets/style/palette"
+
 .loader
   display: flex
   justify-content: center
   overflow: hidden
   padding: 25px
 
-.error-container, .error-container
+.error-container
   padding: 30px
   display: flex
   flex-direction: column
   justify-content: center
   align-items: center
 
+.loader, .error-container
+  height: 100%
+  display: flex
+  align-items: center
+
 .error-icon, .empty-icon
   font-size: 60px
   margin-bottom: 10px
+  width: 60px
+  height: 60px
+  color: $primary-color
 
 .load-data-btn
   margin-top: 5px
