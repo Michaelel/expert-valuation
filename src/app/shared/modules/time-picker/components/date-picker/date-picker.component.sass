@@ -1,0 +1,37 @@
+@import "../../../../../../assets/style/palette"
+
+.hidden
+  display: none
+
+mat-datepicker-toggle
+  font-size: 2em
+
+.mat-input-element:disabled
+  color: #828282 !important
+  &.invalid
+    color: #f44336 !important
+
+.date-form
+  .mat-icon-button, .mat-form-field-suffix .mat-icon-button
+    font-size: 24px !important
+    width: 40px !important
+    height: 40px !important
+
+  .time-button
+    color: $secondary-text-color
+    border-radius: 100%
+
+  .time-button:disabled
+    color: rgba(0, 0, 0, 0.26)
+
+::ng-deep .mat-form-field-appearance-legacy .mat-form-field-suffix .mat-icon-button
+   height: 40px !important
+   width: 40px !important
+
+.custom-errors
+  margin-top: -15px
+  margin-bottom: 10px
+
+::ng-deep
+  .mat-dialog-container
+    padding: 0 !important

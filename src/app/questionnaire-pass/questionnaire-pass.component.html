@@ -1,0 +1,28 @@
+<div class="title">Анкета на компетентность</div>
+<mat-card>
+    <component-state [state]="state" [getData]="getQuestionnaire">
+        <div class="form">
+            <div class="flex-1 fd-column">
+                <div class="question" *ngFor="let question of dataService.questions; let i = index">
+                    <label id="radio-group-label">{{ question.content }}</label>
+                    <mat-radio-group
+                            aria-labelledby="radio-group-label"
+                            class="radio-group"
+                            [(ngModel)]="expert.answers[i].answerId">
+                        <mat-radio-button class="radio-button" *ngFor="let answer of question.answers" [value]="answer.id">
+                            {{ answer.content }}
+                        </mat-radio-button>
+                    </mat-radio-group>
+                </div>
+            </div>
+            <div class="flex-1 empty-flex"></div>
+        </div>
+        <button mat-raised-button
+                class="mat-primary pass-button"
+                [disabled]="isPassButtonDisable"
+                (click)="passQuestionnaire()"
+        >
+            Сохранить
+        </button>
+    </component-state>
+</mat-card>

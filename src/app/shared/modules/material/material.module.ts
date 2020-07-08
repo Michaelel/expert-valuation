@@ -31,12 +31,14 @@ import { MatListModule } from '@angular/material/list';
 import { MatInputModule } from '@angular/material/input';
 import { MatIconModule } from '@angular/material/icon';
 import { MatGridListModule } from '@angular/material/grid-list';
+import { MatDialogModule } from '@angular/material/dialog';
 
 @NgModule({
   declarations: [],
   imports: [
     MatAutocompleteModule,
     MatBottomSheetModule,
+    MatDialogModule,
     MatButtonModule,
     MatButtonToggleModule,
     MatCardModule,
@@ -70,6 +72,7 @@ import { MatGridListModule } from '@angular/material/grid-list';
   exports: [
     MatAutocompleteModule,
     MatBottomSheetModule,
+    MatDialogModule,
     MatButtonModule,
     MatButtonToggleModule,
     MatCardModule,

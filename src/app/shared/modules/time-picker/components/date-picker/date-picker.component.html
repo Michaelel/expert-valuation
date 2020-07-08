@@ -1,0 +1,33 @@
+<div class="date-form" *ngIf="dateCtrl">
+        <mat-form-field class="w-100">
+                <input matInput
+                       [formControl]="dateCtrl"
+                       [placeholder]="dateInputPlaceholder"
+                       matTooltip="Нажмите на иконку календаря справа, чтобы выбрать нужную дату и время"
+                       autocomplete="off">
+
+                <mat-datepicker-toggle matSuffix
+                                       [for]="datePicker"></mat-datepicker-toggle>
+                <mat-datepicker #datePicker
+                                [disabled]="dateCtrl.disabled"
+                                [startAt]="preSelectedDate"
+                ></mat-datepicker>
+
+                <input class="hidden"
+                       matInput
+                       [formControl]="calendarCtrl"
+                       (dateChange)="changeDate($event.value)"
+                       [matDatepicker]="datePicker">
+
+                <button matSuffix
+                        type="button"
+                        mat-icon-button
+                        [disabled]="dateCtrl.disabled || dateCtrl.hasError('pattern') || !dateCtrl.value"
+                        class="time-button"
+                        (click)="changeTime()"><mat-icon>access_time</mat-icon></button>
+        </mat-form-field>
+
+        <div [class.custom-errors]="ref.childNodes.length !== 0">
+                <div #ref><ng-content></ng-content></div>
+        </div>
+</div>

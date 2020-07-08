@@ -1,4 +1,22 @@
 <div class="header">
-    <div class="tabs"></div>
-   <div class="profile-link"></div>
+    <div class="tabs">
+        <div class="tab" (click)="goToTab('questionnaire-list')">
+            Опросы
+        </div>
+        <div class="tab" *ngIf="userService.isAdmin" (click)="goToTab('questionnaire-edit/1')">
+            Тест на компетентность
+        </div>
+        <div class="tab" *ngIf="userService.isExpert && !userService.isVerified" (click)="goToTab('questionnaire-pass/1')">
+            Тест на компетентность
+        </div>
+        <div class="tab">
+            Эксперты
+        </div>
+    </div>
+   <div class="right-header" (click)="redirectToProfile()">
+       <span class="profile-link">
+           {{ userService.user?.firstName }} {{ userService.user?.lastName }}
+        </span>
+       <mat-icon *ngIf="authService.isLoggedIn" (click)="authService.logOut()">exit_to_app</mat-icon>
+   </div>
 </div>

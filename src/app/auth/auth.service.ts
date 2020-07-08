@@ -37,11 +37,9 @@ export class AuthService {
       this.userService.setUser(jwtDecode(token));
       this.isLoggedIn = true;
       this.transport.setToken(token);
-      this.router.navigate([this.retrieveTargetPath() || `profile/${this.userService.user.id}`]);
     } else {
       localStorage.removeItem('user');
       this.isLoggedIn = false;
-      this.router.navigate(['auth']);
     }
   }
 

@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { CanActivate, ActivatedRouteSnapshot, RouterStateSnapshot, UrlTree, Router } from '@angular/router';
 import { Observable } from 'rxjs';
-import { AuthService } from './auth/auth.service';
+import { AuthService } from './auth.service';
 
 @Injectable({
   providedIn: 'root',
@@ -22,7 +22,7 @@ export class AuthGuard implements CanActivate {
     this.authService.saveTargetPath(state.url);
 
     // Navigate to the processLogin page
-    this.router.navigate([ '/login' ]);
+    this.router.navigate([ '/auth' ]);
     return false;
   }
 

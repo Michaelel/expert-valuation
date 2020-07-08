@@ -21,15 +21,15 @@ export class UserService {
   }
 
   get isAdmin(): boolean {
-    return this._user.role === RolesEnum.Admin;
+    return this._user?.role === RolesEnum.Admin;
   }
 
   get isExpert(): boolean {
-    return this._user.role === RolesEnum.Expert;
+    return this._user?.role === RolesEnum.Expert;
   }
 
   get isVerified(): boolean {
-    return this._user.role === RolesEnum.Expert && this._user.isVerified;
+    return this._user?.role === RolesEnum.Expert && this._user?.isVerified;
   }
 
   get user(): UserInterface {

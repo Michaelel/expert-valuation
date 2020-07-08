@@ -26,19 +26,19 @@ export class TransportService {
     this.token = token;
   }
 
-  get<T>(url: string, payload: any): Observable<T> {
+  get<T>(url: string, payload?: any): Observable<T> {
     return this.http.get<T>(`${this.originRoute}${url}`, { headers: this.headersForRequest, params: payload  });
   }
 
-  post<T>(url: string, payload: any): Observable<T> {
+  post<T>(url: string, payload?: any): Observable<T> {
     return this.http.post<T>(`${this.originRoute}${url}`, payload, { headers: this.headersForRequest  });
   }
 
-  put<T>(url: string, payload: any): Observable<T> {
+  put<T>(url: string, payload?: any): Observable<T> {
     return this.http.put<T>(`${this.originRoute}${url}`, payload, { headers: this.headersForRequest  });
   }
 
-  delete<T>(url: string, payload: any): Observable<T> {
+  delete<T>(url: string, payload?: any): Observable<T> {
     return this.http.delete<T>(`${this.originRoute}${url}`, { headers: this.headersForRequest, params: payload });
   }
 
