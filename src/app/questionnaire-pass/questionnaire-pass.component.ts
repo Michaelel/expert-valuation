@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { ExpertInterface } from '../shared/interfaces/expert.interface';
 import { UserService } from '../shared/services/user.service';
 import { QuestionnairePassService } from './questionnaire-pass.service';
@@ -10,7 +10,7 @@ import { QuestionInterface } from '../shared/interfaces/question.interface';
 @Component({
   selector: 'app-questionnaire-pass',
   templateUrl: './questionnaire-pass.component.html',
-  styleUrls: ['./questionnaire-pass.component.sass']
+  styleUrls: ['./questionnaire-pass.component.sass'],
 })
 export class QuestionnairePassComponent implements OnInit {
 
@@ -31,8 +31,8 @@ export class QuestionnairePassComponent implements OnInit {
     this.getQuestionnaire();
   }
 
-  initExpert(): void {
-    this.expert = {
+  getInitedExpert(): ExpertInterface {
+    return {
       id: this.userService.user.id,
       answers: this.dataService.questions.map(question => ({
         questionId: question.id,
@@ -43,11 +43,11 @@ export class QuestionnairePassComponent implements OnInit {
 
   getQuestionnaire = (): void => {
     this.state = ComponentState.Loading;
-    this.dataService.getExpertQuestionnaire().subscribe(
+    this.dataService.getQuestionnaire().subscribe(
         res => {
           this.state = defineState(res);
           this.dataService.questions = res;
-          this.initExpert();
+          this.expert = this.getInitedExpert();
         },
         e => {
           this.state = ComponentState.Error;

@@ -4,6 +4,7 @@ import { QuestionnairePassComponent } from './questionnaire-pass.component';
 import { MaterialModule } from '../shared/modules/material/material.module';
 import { ComponentStateModule } from '../shared/modules/component-state/component-state.module';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { QuestionnairePassFormModule } from '../shared/modules/questionnaire-pass-form/questionnaire-pass-form.module';
 
 @NgModule({
             declarations: [QuestionnairePassComponent],
@@ -13,6 +14,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
               ComponentStateModule,
               ReactiveFormsModule,
               FormsModule,
+              QuestionnairePassFormModule,
             ],
             exports: [QuestionnairePassComponent],
 })

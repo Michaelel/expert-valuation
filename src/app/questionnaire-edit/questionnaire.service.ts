@@ -22,7 +22,7 @@ export class QuestionnaireService {
   }
 
   getQuestionnaire(): Observable<QuestionnaireInterface> {
-    return this.api.getExpertQuestionnaire(this.questionnaireId);
+    return this.api.getQuestionnaire(this.questionnaireId);
   }
 
   editQuestionnaire(questionnaire: QuestionnaireInterface): Observable<QuestionnaireInterface> {

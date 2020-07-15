@@ -1,0 +1,11 @@
+<div mat-dialog-title>
+    {{ data.expertInfo.firstName }} {{ data.expertInfo.lastName }}
+</div>
+<div mat-dialog-content>
+    <component-state [state]="state" [getData]="getQuestionnaire">
+        <app-questionnaire-pass-form [expertAnswers]="data" [questions]="passService.questions" [editable]="false"></app-questionnaire-pass-form>
+    </component-state>
+</div>
+<div mat-dialog-actions align="end">
+    <button mat-button mat-dialog-close>Закрыть</button>
+</div>

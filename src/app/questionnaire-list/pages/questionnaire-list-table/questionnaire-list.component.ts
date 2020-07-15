@@ -51,7 +51,7 @@ export class QuestionnaireListComponent implements OnInit {
   }
 
   goToShowOrResultQuestionnaire(questionnaire: QuestionnaireInterface): void {
-    const openResultTab = this.moment.moment(questionnaire.dateStart).isAfter(this.moment.moment());
+    const openResultTab = this.moment.moment(questionnaire.dateStart).isBefore(this.moment.moment());
     this.router.navigate([`questionnaire-list/${openResultTab ? 'result' : 'show'}/${questionnaire.id}`]);
   }
 

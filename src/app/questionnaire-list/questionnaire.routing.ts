@@ -12,7 +12,7 @@ const routes: Routes = [
     component: QuestionnaireListComponent,
   },
   {
-    path: 'result/:id',
+    path: 'result/:questionnaireId',
     component: QuestionnaireResultComponent,
   },
   {
@@ -20,7 +20,7 @@ const routes: Routes = [
     component: QuestionnaireEditComponent,
   },
   {
-    path: 'show/:id',
+    path: 'show/:questionnaireId',
     component: QuestionnaireShowComponent,
   },
 ];

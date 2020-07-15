@@ -17,8 +17,8 @@ export class QuestionnairePassService {
       private api: ApiService,
   ) { }
 
-  getExpertQuestionnaire(): Observable<QuestionInterface[]> {
-    return this.api.getExpertQuestionnaire(this.questionnaireId).pipe(
+  getQuestionnaire(): Observable<QuestionInterface[]> {
+    return this.api.getQuestionnaire(this.questionnaireId).pipe(
         pluck('questions'),
     );
   }

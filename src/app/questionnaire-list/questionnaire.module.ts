@@ -9,6 +9,8 @@ import { QuestionnaireResultComponent } from './pages/questionnaire-result/quest
 import { QuestionnaireShowComponent } from './pages/questionnaire-show/questionnaire-show.component';
 import { CreateQuestionnaireComponent } from './components/create-questionnaire/create-questionnaire.component';
 import { DateTimePickerModule } from '../shared/modules/time-picker/date-time-picker.module';
+import { QuestionnaireDialogComponent } from './components/questionnaire-dialog/questionnaire-dialog.component';
+import { QuestionnaireDialogModule } from './components/questionnaire-dialog/questionnaire-dialog.module';
 
 
 
@@ -21,6 +23,8 @@ import { DateTimePickerModule } from '../shared/modules/time-picker/date-time-pi
     ComponentStateModule,
     QuestionnaireRouting,
     DateTimePickerModule,
+    QuestionnaireDialogModule,
   ],
+  entryComponents: [ QuestionnaireDialogComponent ],
 })
 export class QuestionnaireModule { }
