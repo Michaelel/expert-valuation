@@ -4,6 +4,7 @@ import { DEFAULT_PHONE_NUMBER_PATTERN } from '../../environments/constants';
 import { ProfileService } from './profile.service';
 import { ComponentState } from '../shared/modules/component-state/component-state.enum';
 import { ActivatedRoute } from '@angular/router';
+import { UserService } from '../shared/services/user.service';
 
 @Component({
   selector: 'app-profile',
@@ -24,9 +25,13 @@ export class ProfileComponent implements OnInit {
   constructor(
       private fb: FormBuilder,
       private dataService: ProfileService,
+      private user: UserService,
       private route: ActivatedRoute,
   ) {
     this.dataService.profileId = +this.route.snapshot.paramMap.get('profileId');
+    if (+this.user.user.id !== +this.dataService.profileId) {
+        this.profileForm.disable();
+    }
   }
 
   ngOnInit(): void {

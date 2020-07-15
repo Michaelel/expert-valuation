@@ -256,4 +256,26 @@ export class ApiService {
         pluck('questions'),
     );
   }
+
+  getExpertList(): Observable<UserInterface[]> {
+    return of([
+        {
+            id: 1,
+            firstName: 'Michael',
+            lastName: 'Yeliseiev',
+            phone: '+380977136785',
+            email: 'michaelel1411@gmail.com',
+        },
+        {
+          id: 2,
+          firstName: 'Serhii',
+          lastName: 'Lytka',
+          phone: '+380678598745',
+          email: 'lytka.serhii@gmail.com',
+        },
+    ]);
+    return this.transport.get('expert/get/list').pipe(
+        pluck('experts'),
+    );
+  }
 }

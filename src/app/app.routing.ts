@@ -36,6 +36,11 @@ const routes: Routes = [
       loadChildren: () => import('./questionnaire-list/questionnaire.module').then(m => m.QuestionnaireModule),
       canActivate: [AuthGuard],
   },
+  {
+    path: 'expert-list',
+    loadChildren: () => import('./expert/expert.module').then(m => m.ExpertModule),
+    canActivate: [AuthGuard],
+  },
 ];
 
 // canActivate: [AuthGuard]

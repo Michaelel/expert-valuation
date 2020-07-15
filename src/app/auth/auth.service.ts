@@ -7,13 +7,14 @@ import { SignupRequestInterface } from '../shared/interfaces/signup-request.inte
 import { MomentService } from '../shared/services/moment.service';
 import { Router } from '@angular/router';
 import * as jwtDecode from 'jwt-decode';
+import { BehaviorSubject, Subject } from 'rxjs';
 
 @Injectable({
   providedIn: 'root',
 })
 export class AuthService {
 
-  isLoggedIn: boolean;
+  isLoggedIn$ = new BehaviorSubject<boolean>(false);
 
   isLoginMode: boolean = true;
 
@@ -35,11 +36,11 @@ export class AuthService {
     const token = localStorage.getItem('user');
     if (token && this.moment.moment(jwtDecode(token).tokenExpirationDate).isAfter(this.moment.moment())) {
       this.userService.setUser(jwtDecode(token));
-      this.isLoggedIn = true;
+      this.isLoggedIn$.next(true);
       this.transport.setToken(token);
     } else {
       localStorage.removeItem('user');
-      this.isLoggedIn = false;
+      this.isLoggedIn$.next(false);
     }
   }
 
@@ -69,7 +70,7 @@ export class AuthService {
 
   makeAfterLoginActions(token: string): void {
     this.isAuthInProgress = false;
-    this.isLoggedIn = true;
+    this.isLoggedIn$.next(true);
     localStorage.setItem('user', token);
     this.userService.setUser(jwtDecode(token));
     this.transport.setToken(token);
@@ -77,7 +78,7 @@ export class AuthService {
   }
 
   logOut(): void {
-    this.isLoggedIn = false;
+    this.isLoggedIn$.next(false);
     localStorage.removeItem('user');
     this.userService.clearUser();
     this.transport.setToken(null);

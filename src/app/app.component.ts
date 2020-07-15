@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { filter } from 'rxjs/operators';
+import { AuthService } from './auth/auth.service';
 
 @Component({
   selector: 'app-root',
@@ -10,15 +11,10 @@ import { filter } from 'rxjs/operators';
 export class AppComponent {
   title = 'expert-valuation-ui';
 
-  showHeader: boolean;
 
-  constructor(private router: Router) {
-    this.router.events.pipe(
-        // untilDestroyed(this),
-        // @ts-ignore
-        filter(res => res.url),
-        // @ts-ignore
-    ).subscribe(res => this.showHeader = !res.url.includes('auth'));
+  constructor(
+      public authService: AuthService,
+      ) {
   }
 
 }
