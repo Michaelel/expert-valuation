@@ -1,0 +1,21 @@
+<div class="title">Опрос</div>
+<mat-card>
+    <component-state [state]="state" [getData]="getQuestionnaire">
+        <div class="questionnaire-header">
+            <div class="card-title">{{ questionnaire?.title }}</div>
+            <div class="date-start">
+                <div class="key">
+                    Дата начала:
+                </div>
+                <div class="value">
+                    {{ questionnaire?.dateStart }}
+                </div>
+            </div>
+            <div class="id">{{ questionnaire?.id }}</div>
+        </div>
+        <div class="questions" *ngIf="expert">
+            <div class="questions-title">Вопросы</div>
+            <app-questionnaire-pass-form [questions]="questionnaire.questions" [expertAnswers]="expert" [editable]="false"></app-questionnaire-pass-form>
+        </div>
+    </component-state>
+</mat-card>

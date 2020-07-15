@@ -6,6 +6,7 @@ import { defineState } from '../../../../environments/pure-functions';
 import { QuestionnaireListService } from '../../questionnaire-list.service';
 import { QuestionnaireService } from '../../../questionnaire-edit/questionnaire.service';
 import { QuestionnairePassService } from '../../../questionnaire-pass/questionnaire-pass.service';
+import { pluck } from 'rxjs/operators';
 
 @Component({
   selector: 'app-questionnaire-dialog',
@@ -28,7 +29,9 @@ export class QuestionnaireDialogComponent implements OnInit {
 
   getQuestionnaire = (): void => {
     this.state = ComponentState.Loading;
-    this.passService.getQuestionnaire().subscribe(
+    this.passService.getQuestionnaire().pipe(
+        pluck('questions'),
+    ).subscribe(
         res => {
           this.state = defineState(res);
           this.passService.questions = res;

@@ -6,6 +6,7 @@ import { ComponentState } from '../shared/modules/component-state/component-stat
 import { ActivatedRoute, Router } from '@angular/router';
 import { defineState } from '../../environments/pure-functions';
 import { QuestionInterface } from '../shared/interfaces/question.interface';
+import { pluck } from 'rxjs/operators';
 
 @Component({
   selector: 'app-questionnaire-pass',
@@ -43,7 +44,9 @@ export class QuestionnairePassComponent implements OnInit {
 
   getQuestionnaire = (): void => {
     this.state = ComponentState.Loading;
-    this.dataService.getQuestionnaire().subscribe(
+    this.dataService.getQuestionnaire().pipe(
+        pluck('questions'),
+    ).subscribe(
         res => {
           this.state = defineState(res);
           this.dataService.questions = res;

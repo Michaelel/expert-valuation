@@ -4,6 +4,7 @@ import { QuestionInterface } from '../shared/interfaces/question.interface';
 import { ApiService } from '../shared/services/api.service';
 import { ExpertInterface } from '../shared/interfaces/expert.interface';
 import { pluck } from 'rxjs/operators';
+import { QuestionnaireInterface } from '../shared/interfaces/questionnaire.interface';
 
 @Injectable({
   providedIn: 'root',
@@ -17,10 +18,8 @@ export class QuestionnairePassService {
       private api: ApiService,
   ) { }
 
-  getQuestionnaire(): Observable<QuestionInterface[]> {
-    return this.api.getQuestionnaire(this.questionnaireId).pipe(
-        pluck('questions'),
-    );
+  getQuestionnaire(): Observable<QuestionnaireInterface> {
+    return this.api.getQuestionnaire(this.questionnaireId);
   }
 
   passQuestionnaire(expert: ExpertInterface): Observable<any> {

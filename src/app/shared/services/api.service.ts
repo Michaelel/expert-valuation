@@ -214,9 +214,7 @@ export class ApiService {
                           },
                       ]
                   });
-        return this.transport.get('questions/get', { id }).pipe(
-            pluck('questions'),
-        );
+        return this.transport.get('questions/get', { id });
     }
 
     editQuestionnaire(questionnaire: QuestionnaireInterface): Observable<QuestionnaireInterface> {
