@@ -23,7 +23,10 @@
             <!-- Symbol Column -->
             <ng-container matColumnDef="action">
                 <mat-header-cell *matHeaderCellDef></mat-header-cell>
-                <mat-cell *matCellDef="let element"><mat-icon (click)="goToEditQuestionnaire($event, element.id)">edit</mat-icon></mat-cell>
+                <mat-cell *matCellDef="let element">
+                    <mat-icon *ngIf="userService.isAdmin" (click)="goToEditQuestionnaire($event, element.id)">edit</mat-icon>
+                    <mat-icon *ngIf="userService.isVerified && isDateBeforeNow(element.dateStart)" (click)="passQuestionnaire(element.id)">group_add</mat-icon>
+                </mat-cell>
             </ng-container>
 
             <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
@@ -32,4 +35,4 @@
     </component-state>
 </mat-card>
 
-<button class="add-item-button" mat-fab (click)="goToCreateQuestionnaire()"><mat-icon>add</mat-icon></button>
+<button class="add-item-button" mat-fab *ngIf="userService.isAdmin" (click)="goToCreateQuestionnaire()"><mat-icon>add</mat-icon></button>

@@ -54,7 +54,7 @@ export class QuestionnaireResultComponent implements OnInit {
     this.dialog.open(
         QuestionnaireDialogComponent,
         {
-          data: expertResult,
+          data: { expert: expertResult },
         },
     );
   }

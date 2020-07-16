@@ -8,6 +8,7 @@ import { MomentService } from '../../../shared/services/moment.service';
 import { MatBottomSheet } from '@angular/material/bottom-sheet';
 import { CreateQuestionnaireComponent } from '../../components/create-questionnaire/create-questionnaire.component';
 import { filter, switchMap, tap } from 'rxjs/operators';
+import { UserService } from '../../../shared/services/user.service';
 
 @Component({
   selector: 'app-questionnaire-list',
@@ -25,6 +26,7 @@ export class QuestionnaireListComponent implements OnInit {
       private router: Router,
       private moment: MomentService,
       private bottomSheet: MatBottomSheet,
+      public userService: UserService,
   ) { }
 
   ngOnInit(): void {
@@ -51,8 +53,15 @@ export class QuestionnaireListComponent implements OnInit {
   }
 
   goToShowOrResultQuestionnaire(questionnaire: QuestionnaireInterface): void {
-    const openResultTab = this.moment.moment(questionnaire.dateStart).isBefore(this.moment.moment());
-    this.router.navigate([`questionnaire-list/${openResultTab ? 'result' : 'show'}/${questionnaire.id}`]);
+    this.router.navigate([`questionnaire-list/${this.isDateBeforeNow(questionnaire.dateStart) ? 'result' : 'show'}/${questionnaire.id}`]);
+  }
+
+  isDateBeforeNow(date: string): boolean {
+    return this.moment.moment(date).isBefore(this.moment.moment());
+  }
+
+  passQuestionnaire(id: number): void {
+    this.router.navigate([`questionnaire-pass/${id}`]);
   }
 
   goToCreateQuestionnaire(): void {

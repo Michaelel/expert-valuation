@@ -22,7 +22,7 @@ export class ApiService {
 
     login(payload: LoginRequestInterface): Observable<string> {
         console.log(payload);
-        return of('eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpZCI6MSwiZmlyc3ROYW1lIjoiTWljaGFlbCIsImxhc3ROYW1lIjoiWWVsaXNlaWV2Iiwicm9sZSI6IkV4cGVydCIsInRva2VuRXhwaXJhdGlvbkRhdGUiOiIyMDIwLTA3LTA5IDAwOjAwOjAwIiwiZW1haWwiOiJtaWNoYWVsZWwxNDExQGdtYWlsLmNvbSIsInBob25lIjoiKzM4MDk3NzEzNjc4NSIsImlzVmVyaWZpZWQiOmZhbHNlLCJqdGkiOiI2NjYwY2JjMy1hNzUwLTRjYjEtYTlkZi0xNzA5MGZlMGUyMDkiLCJpYXQiOjE1OTQxMzQ1NzMsImV4cCI6MTU5NDE2ODYzNn0.J9ogjnkc35pmi4Lw-DxU--GtKIzCaGLxLI-tjzIyA8Y');
+        return of('eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpZCI6MSwiZmlyc3ROYW1lIjoiTWljaGFlbCIsImxhc3ROYW1lIjoiWWVsaXNlaWV2Iiwicm9sZSI6IkFkbWluIiwidG9rZW5FeHBpcmF0aW9uRGF0ZSI6IjIwMjAtMDctMDkgMDA6MDA6MDAiLCJlbWFpbCI6Im1pY2hhZWxlbDE0MTFAZ21haWwuY29tIiwicGhvbmUiOiIrMzgwOTc3MTM2Nzg1IiwiaXNWZXJpZmllZCI6ZmFsc2UsImp0aSI6IjY2NjBjYmMzLWE3NTAtNGNiMS1hOWRmLTE3MDkwZmUwZTIwOSIsImlhdCI6MTU5NDEzNDU3MywiZXhwIjoxNTk0MTY4NjM2fQ._mDb7MwdLSIpWVSkEyLrk1HgL7-rIRX43aMMk2zbRr4');
         return this.transport.post('login', payload).pipe(
             pluck('token'),
         );
@@ -267,6 +267,7 @@ export class ApiService {
                           lastName: 'Yeliseiev',
                           phone: '+380977136785',
                           email: 'michaelel1411@gmail.com',
+                          isVerified: true,
                       },
                       {
                           id: 2,
@@ -274,6 +275,7 @@ export class ApiService {
                           lastName: 'Lytka',
                           phone: '+380678598745',
                           email: 'lytka.serhii@gmail.com',
+                          isVerified: false,
                       },
                   ]);
         return this.transport.get('expert/get/list').pipe(
@@ -366,5 +368,57 @@ export class ApiService {
         return this.transport.get('questionnaire/result/get', { id }).pipe(
             pluck('questionnaire'),
         );
+    }
+
+    getQuestionnaireExpertResult(id: number, expertId: number): Observable<QuestionnaireResultInterface> {
+        return of({
+                      id: 1,
+                      title: 'Опрос 1',
+                      dateStart: '2020-07-08 00:00:00',
+                      expertsResults: [
+                          {
+                              id: 1,
+                              expertInfo: {
+                                  id: 1,
+                                  firstName: 'Michael',
+                                  lastName: 'Yeliseiev',
+                                  phone: '+380977136785',
+                                  email: 'michaelel1411@gmail.com',
+                              },
+                              answers: [
+                                  {
+                                      questionId: 1,
+                                      answerId: 1,
+                                  },
+                                  {
+                                      questionId: 2,
+                                      answerId: 2,
+                                  },
+                                  {
+                                      questionId: 3,
+                                      answerId: 1,
+                                  },
+                                  {
+                                      questionId: 4,
+                                      answerId: 2,
+                                  },
+                                  {
+                                      questionId: 5,
+                                      answerId: 1,
+                                  },
+                                  {
+                                      questionId: 6,
+                                      answerId: 2,
+                                  },
+                              ],
+                              competence: 5,
+                          },
+                      ],
+                  });
+        return this.transport.get('questionnaire/expert/result/get',  { id, expertId });
+    }
+
+    passVerificationProcess(expertId: number, isVerified: boolean): Observable<void> {
+        return this.transport.put('expert/verify', { expertId, isVerified });
     }
 }

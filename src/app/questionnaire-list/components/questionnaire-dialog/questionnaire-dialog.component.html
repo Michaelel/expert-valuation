@@ -1,11 +1,13 @@
 <div mat-dialog-title>
-    {{ data.expertInfo.firstName }} {{ data.expertInfo.lastName }}
+    {{ data.expert.expertInfo.firstName }} {{ data.expert.expertInfo.lastName }}
 </div>
 <div mat-dialog-content>
     <component-state [state]="state" [getData]="getQuestionnaire">
-        <app-questionnaire-pass-form [expertAnswers]="data" [questions]="passService.questions" [editable]="false"></app-questionnaire-pass-form>
+        <app-questionnaire-pass-form [expertAnswers]="data.expert" [questions]="passService.questions" [editable]="false"></app-questionnaire-pass-form>
     </component-state>
 </div>
 <div mat-dialog-actions align="end">
     <button mat-button mat-dialog-close>Закрыть</button>
+    <button mat-raised-button class="mat-accent" *ngIf="data.verificationMode" (click)="finishVerification(false)">Не верефицировать</button>
+    <button mat-raised-button class="mat-primary" *ngIf="data.verificationMode" (click)="finishVerification(true)">Верефицировать</button>
 </div>

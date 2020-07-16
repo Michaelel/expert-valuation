@@ -19,8 +19,8 @@ export class QuestionnaireDialogComponent implements OnInit {
 
   constructor(
       public passService: QuestionnairePassService,
-      private dialogRed: MatDialogRef<QuestionnaireDialogComponent>,
-      @Inject(MAT_DIALOG_DATA) public data: ExpertInterface,
+      private dialogRef: MatDialogRef<QuestionnaireDialogComponent>,
+      @Inject(MAT_DIALOG_DATA) public data: { expert: ExpertInterface, verificationMode?: boolean },
   ) { }
 
   ngOnInit(): void {
@@ -41,6 +41,10 @@ export class QuestionnaireDialogComponent implements OnInit {
           alert(e);
         },
     );
+  }
+
+  finishVerification(isVerified: boolean): void {
+    this.dialogRef.close({ isVerified });
   }
 
 }

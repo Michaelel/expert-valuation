@@ -3,6 +3,13 @@ import { ComponentState } from '../../../shared/modules/component-state/componen
 import { Router } from '@angular/router';
 import { ExpertService } from '../../expert.service';
 import { defineState } from '../../../../environments/pure-functions';
+import { UserService } from '../../../shared/services/user.service';
+import { MatDialog } from '@angular/material/dialog';
+import { QuestionnairePassComponent } from '../../../questionnaire-pass/questionnaire-pass.component';
+import { ApiService } from '../../../shared/services/api.service';
+import { filter, switchMap } from 'rxjs/operators';
+import { pipe } from 'rxjs';
+import { QuestionnaireDialogComponent } from '../../../questionnaire-list/components/questionnaire-dialog/questionnaire-dialog.component';
 
 @Component({
   selector: 'app-expert-list',
@@ -13,11 +20,14 @@ export class ExpertListComponent implements OnInit {
 
   state = ComponentState.Loading;
 
-  displayedColumns = ['id', 'name', 'email', 'phone'];
+  displayedColumns = ['id', 'name', 'email', 'phone', 'action'];
 
   constructor(
       public dataService: ExpertService,
+      public userService: UserService,
       private router: Router,
+      private dialog: MatDialog,
+      private api: ApiService,
   ) { }
 
   ngOnInit(): void {
@@ -36,6 +46,23 @@ export class ExpertListComponent implements OnInit {
           alert(e);
         },
     );
+  }
+
+  verifyUser(expertId: number): void {
+    this.api.getQuestionnaireExpertResult(1, expertId).pipe(
+        switchMap(res => this.dialog.open(
+              QuestionnaireDialogComponent,
+              {
+                data: {
+                  verificationMode: true,
+                  expert: res.expertsResults[0],
+                },
+              },
+            ).afterClosed(),
+        ),
+        filter(res => !!res),
+        switchMap(res => this.api.passVerificationProcess(expertId, res.isVerified)),
+    ).subscribe();
   }
 
   goExpert(expertId: number): void {
