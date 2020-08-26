@@ -21,16 +21,16 @@ export class ApiService {
     }
 
     login(payload: LoginRequestInterface): Observable<string> {
-        console.log(payload);
-        return of('eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpZCI6MSwiZmlyc3ROYW1lIjoiTWljaGFlbCIsImxhc3ROYW1lIjoiWWVsaXNlaWV2Iiwicm9sZSI6IkV4cGVydCIsInRva2VuRXhwaXJhdGlvbkRhdGUiOiIyMDIwLTA3LTA5IDAwOjAwOjAwIiwiZW1haWwiOiJtaWNoYWVsZWwxNDExQGdtYWlsLmNvbSIsInBob25lIjoiKzM4MDk3NzEzNjc4NSIsImlzVmVyaWZpZWQiOnRydWUsImp0aSI6IjY2NjBjYmMzLWE3NTAtNGNiMS1hOWRmLTE3MDkwZmUwZTIwOSIsImlhdCI6MTU5NDEzNDU3MywiZXhwIjoxNTk0MTY4NjM2fQ.sTHMv1Yi874Hp4H9zLRt-nFEKyovEl__dwTIc6jdLck');
+        // console.log(payload);
+        // return of('eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpZCI6MSwiZmlyc3ROYW1lIjoiTWljaGFlbCIsImxhc3ROYW1lIjoiWWVsaXNlaWV2Iiwicm9sZSI6IkV4cGVydCIsInRva2VuRXhwaXJhdGlvbkRhdGUiOiIyMDIwLTA3LTA5IDAwOjAwOjAwIiwiZW1haWwiOiJtaWNoYWVsZWwxNDExQGdtYWlsLmNvbSIsInBob25lIjoiKzM4MDk3NzEzNjc4NSIsImlzVmVyaWZpZWQiOnRydWUsImp0aSI6IjY2NjBjYmMzLWE3NTAtNGNiMS1hOWRmLTE3MDkwZmUwZTIwOSIsImlhdCI6MTU5NDEzNDU3MywiZXhwIjoxNTk0MTY4NjM2fQ.sTHMv1Yi874Hp4H9zLRt-nFEKyovEl__dwTIc6jdLck');
         return this.transport.post('login', payload).pipe(
             pluck('token'),
         );
     }
 
     signup(payload: SignupRequestInterface): Observable<string> {
-        console.log(payload);
-        return of('eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpZCI6MSwiZmlyc3ROYW1lIjoiTWljaGFlbCIsImxhc3ROYW1lIjoiWWVsaXNlaWV2Iiwicm9sZSI6IkV4cGVydCIsInRva2VuRXhwaXJhdGlvbkRhdGUiOiIyMDIwLTA3LTA5IDAwOjAwOjAwIiwiZW1haWwiOiJtaWNoYWVsZWwxNDExQGdtYWlsLmNvbSIsInBob25lIjoiKzM4MDk3NzEzNjc4NSIsImlzVmVyaWZpZWQiOmZhbHNlLCJqdGkiOiI2NjYwY2JjMy1hNzUwLTRjYjEtYTlkZi0xNzA5MGZlMGUyMDkiLCJpYXQiOjE1OTQxMzQ1NzMsImV4cCI6MTU5NDE2ODYzNn0.J9ogjnkc35pmi4Lw-DxU--GtKIzCaGLxLI-tjzIyA8Y');
+        // console.log(payload);
+        // return of('eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpZCI6MSwiZmlyc3ROYW1lIjoiTWljaGFlbCIsImxhc3ROYW1lIjoiWWVsaXNlaWV2Iiwicm9sZSI6IkV4cGVydCIsInRva2VuRXhwaXJhdGlvbkRhdGUiOiIyMDIwLTA3LTA5IDAwOjAwOjAwIiwiZW1haWwiOiJtaWNoYWVsZWwxNDExQGdtYWlsLmNvbSIsInBob25lIjoiKzM4MDk3NzEzNjc4NSIsImlzVmVyaWZpZWQiOmZhbHNlLCJqdGkiOiI2NjYwY2JjMy1hNzUwLTRjYjEtYTlkZi0xNzA5MGZlMGUyMDkiLCJpYXQiOjE1OTQxMzQ1NzMsImV4cCI6MTU5NDE2ODYzNn0.J9ogjnkc35pmi4Lw-DxU--GtKIzCaGLxLI-tjzIyA8Y');
         return this.transport.post('signup', payload).pipe(
             pluck('token'),
         );
