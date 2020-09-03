@@ -22,7 +22,15 @@ export class ApiService {
 
     login(payload: LoginRequestInterface): Observable<string> {
         // console.log(payload);
-        // return of('eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpZCI6MSwiZmlyc3ROYW1lIjoiTWljaGFlbCIsImxhc3ROYW1lIjoiWWVsaXNlaWV2Iiwicm9sZSI6IkV4cGVydCIsInRva2VuRXhwaXJhdGlvbkRhdGUiOiIyMDIwLTA3LTA5IDAwOjAwOjAwIiwiZW1haWwiOiJtaWNoYWVsZWwxNDExQGdtYWlsLmNvbSIsInBob25lIjoiKzM4MDk3NzEzNjc4NSIsImlzVmVyaWZpZWQiOnRydWUsImp0aSI6IjY2NjBjYmMzLWE3NTAtNGNiMS1hOWRmLTE3MDkwZmUwZTIwOSIsImlhdCI6MTU5NDEzNDU3MywiZXhwIjoxNTk0MTY4NjM2fQ.sTHMv1Yi874Hp4H9zLRt-nFEKyovEl__dwTIc6jdLck');
+        if (payload.email === 'test@expert') {
+            return of('eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpZCI6MSwiZmlyc3ROYW1lIjoiTWljaGFlbCIsImxhc3ROYW1lIjoiWWVsaXNlaWV2Iiwicm9sZSI6IkV4cGVydCIsInRva2VuRXhwaXJhdGlvbkRhdGUiOiIyMDIwLTA3LTA5IDAwOjAwOjAwIiwiZW1haWwiOiJtaWNoYWVsZWwxNDExQGdtYWlsLmNvbSIsInBob25lIjoiKzM4MDk3NzEzNjc4NSIsImlzVmVyaWZpZWQiOnRydWUsImp0aSI6IjY2NjBjYmMzLWE3NTAtNGNiMS1hOWRmLTE3MDkwZmUwZTIwOSIsImlhdCI6MTU5NDEzNDU3MywiZXhwIjoxNTk0MTY4NjM2fQ.sTHMv1Yi874Hp4H9zLRt-nFEKyovEl__dwTIc6jdLck');
+        } else if (payload.email === 'test@unverified.expert') {
+            return of('eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpZCI6MSwiZmlyc3ROYW1lIjoiTWljaGFlbCIsImxhc3ROYW1lIjoiWWVsaXNlaWV2Iiwicm9sZSI6IkV4cGVydCIsInRva2VuRXhwaXJhdGlvbkRhdGUiOiIyMDIwLTA3LTA5IDAwOjAwOjAwIiwiZW1haWwiOiJtaWNoYWVsZWwxNDExQGdtYWlsLmNvbSIsInBob25lIjoiKzM4MDk3NzEzNjc4NSIsImlzVmVyaWZpZWQiOmZhbHNlLCJqdGkiOiI2NjYwY2JjMy1hNzUwLTRjYjEtYTlkZi0xNzA5MGZlMGUyMDkiLCJpYXQiOjE1OTQxMzQ1NzMsImV4cCI6MTU5NDE2ODYzNn0.1BLphStqYomt5xKpRfyek87dt7ziFHTJ-m4PnQKcrmU');
+        } else if (payload.email === 'test@admin') {
+            return of('eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpZCI6MSwiZmlyc3ROYW1lIjoiTWljaGFlbCIsImxhc3ROYW1lIjoiWWVsaXNlaWV2Iiwicm9sZSI6IkFkbWluIiwidG9rZW5FeHBpcmF0aW9uRGF0ZSI6IjIwMjAtMDctMDkgMDA6MDA6MDAiLCJlbWFpbCI6Im1pY2hhZWxlbDE0MTFAZ21haWwuY29tIiwicGhvbmUiOiIrMzgwOTc3MTM2Nzg1IiwiaXNWZXJpZmllZCI6dHJ1ZSwianRpIjoiNjY2MGNiYzMtYTc1MC00Y2IxLWE5ZGYtMTcwOTBmZTBlMjA5IiwiaWF0IjoxNTk0MTM0NTczLCJleHAiOjE1OTQxNjg2MzZ9.G-YGrbs2AR0OfleHQHWf2oQE31XNjNVuxqU6dkY9bMY');
+        } else if (payload.email === 'test@user') {
+            return of('eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpZCI6MSwiZmlyc3ROYW1lIjoiTWljaGFlbCIsImxhc3ROYW1lIjoiWWVsaXNlaWV2Iiwicm9sZSI6IlVzZXIiLCJ0b2tlbkV4cGlyYXRpb25EYXRlIjoiMjAyMC0wNy0wOSAwMDowMDowMCIsImVtYWlsIjoibWljaGFlbGVsMTQxMUBnbWFpbC5jb20iLCJwaG9uZSI6IiszODA5NzcxMzY3ODUiLCJpc1ZlcmlmaWVkIjp0cnVlLCJqdGkiOiI2NjYwY2JjMy1hNzUwLTRjYjEtYTlkZi0xNzA5MGZlMGUyMDkiLCJpYXQiOjE1OTQxMzQ1NzMsImV4cCI6MTU5NDE2ODYzNn0.HD96Q7IGhGzGXZgkyw0NqXeDXOZN8vgxLK4C54VJ0-s');
+        }
         return this.transport.post('login', payload).pipe(
             pluck('token'),
         );
@@ -31,6 +39,15 @@ export class ApiService {
     signup(payload: SignupRequestInterface): Observable<string> {
         // console.log(payload);
         // return of('eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpZCI6MSwiZmlyc3ROYW1lIjoiTWljaGFlbCIsImxhc3ROYW1lIjoiWWVsaXNlaWV2Iiwicm9sZSI6IkV4cGVydCIsInRva2VuRXhwaXJhdGlvbkRhdGUiOiIyMDIwLTA3LTA5IDAwOjAwOjAwIiwiZW1haWwiOiJtaWNoYWVsZWwxNDExQGdtYWlsLmNvbSIsInBob25lIjoiKzM4MDk3NzEzNjc4NSIsImlzVmVyaWZpZWQiOmZhbHNlLCJqdGkiOiI2NjYwY2JjMy1hNzUwLTRjYjEtYTlkZi0xNzA5MGZlMGUyMDkiLCJpYXQiOjE1OTQxMzQ1NzMsImV4cCI6MTU5NDE2ODYzNn0.J9ogjnkc35pmi4Lw-DxU--GtKIzCaGLxLI-tjzIyA8Y');
+        if (payload.email === 'test@expert') {
+            return of('eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpZCI6MSwiZmlyc3ROYW1lIjoiTWljaGFlbCIsImxhc3ROYW1lIjoiWWVsaXNlaWV2Iiwicm9sZSI6IkV4cGVydCIsInRva2VuRXhwaXJhdGlvbkRhdGUiOiIyMDIwLTA3LTA5IDAwOjAwOjAwIiwiZW1haWwiOiJtaWNoYWVsZWwxNDExQGdtYWlsLmNvbSIsInBob25lIjoiKzM4MDk3NzEzNjc4NSIsImlzVmVyaWZpZWQiOnRydWUsImp0aSI6IjY2NjBjYmMzLWE3NTAtNGNiMS1hOWRmLTE3MDkwZmUwZTIwOSIsImlhdCI6MTU5NDEzNDU3MywiZXhwIjoxNTk0MTY4NjM2fQ.sTHMv1Yi874Hp4H9zLRt-nFEKyovEl__dwTIc6jdLck');
+        } else if (payload.email === 'test@unverified.expert') {
+            return of('eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpZCI6MSwiZmlyc3ROYW1lIjoiTWljaGFlbCIsImxhc3ROYW1lIjoiWWVsaXNlaWV2Iiwicm9sZSI6IkV4cGVydCIsInRva2VuRXhwaXJhdGlvbkRhdGUiOiIyMDIwLTA3LTA5IDAwOjAwOjAwIiwiZW1haWwiOiJtaWNoYWVsZWwxNDExQGdtYWlsLmNvbSIsInBob25lIjoiKzM4MDk3NzEzNjc4NSIsImlzVmVyaWZpZWQiOmZhbHNlLCJqdGkiOiI2NjYwY2JjMy1hNzUwLTRjYjEtYTlkZi0xNzA5MGZlMGUyMDkiLCJpYXQiOjE1OTQxMzQ1NzMsImV4cCI6MTU5NDE2ODYzNn0.1BLphStqYomt5xKpRfyek87dt7ziFHTJ-m4PnQKcrmU');
+        } else if (payload.email === 'test@admin') {
+            return of('eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpZCI6MSwiZmlyc3ROYW1lIjoiTWljaGFlbCIsImxhc3ROYW1lIjoiWWVsaXNlaWV2Iiwicm9sZSI6IkFkbWluIiwidG9rZW5FeHBpcmF0aW9uRGF0ZSI6IjIwMjAtMDctMDkgMDA6MDA6MDAiLCJlbWFpbCI6Im1pY2hhZWxlbDE0MTFAZ21haWwuY29tIiwicGhvbmUiOiIrMzgwOTc3MTM2Nzg1IiwiaXNWZXJpZmllZCI6dHJ1ZSwianRpIjoiNjY2MGNiYzMtYTc1MC00Y2IxLWE5ZGYtMTcwOTBmZTBlMjA5IiwiaWF0IjoxNTk0MTM0NTczLCJleHAiOjE1OTQxNjg2MzZ9.G-YGrbs2AR0OfleHQHWf2oQE31XNjNVuxqU6dkY9bMY');
+        } else if (payload.email === 'test@user') {
+            return of('eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpZCI6MSwiZmlyc3ROYW1lIjoiTWljaGFlbCIsImxhc3ROYW1lIjoiWWVsaXNlaWV2Iiwicm9sZSI6IlVzZXIiLCJ0b2tlbkV4cGlyYXRpb25EYXRlIjoiMjAyMC0wNy0wOSAwMDowMDowMCIsImVtYWlsIjoibWljaGFlbGVsMTQxMUBnbWFpbC5jb20iLCJwaG9uZSI6IiszODA5NzcxMzY3ODUiLCJpc1ZlcmlmaWVkIjp0cnVlLCJqdGkiOiI2NjYwY2JjMy1hNzUwLTRjYjEtYTlkZi0xNzA5MGZlMGUyMDkiLCJpYXQiOjE1OTQxMzQ1NzMsImV4cCI6MTU5NDE2ODYzNn0.HD96Q7IGhGzGXZgkyw0NqXeDXOZN8vgxLK4C54VJ0-s');
+        }
         return this.transport.post('signup', payload).pipe(
             pluck('token'),
         );
