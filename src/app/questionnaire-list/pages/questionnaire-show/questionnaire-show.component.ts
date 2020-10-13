@@ -30,7 +30,7 @@ export class QuestionnaireShowComponent implements OnInit {
 
   getInitedExpert(): ExpertInterface {
     return {
-      id: this.userService.user.id,
+      expertInfo: { id: this.userService.user.id },
       answers: this.questionnaire.questions.map(question => ({
         questionId: question.id,
         answerId: null,

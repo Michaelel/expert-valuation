@@ -34,9 +34,13 @@ export class AuthService {
 
   tryToLoginFromLocalStorage(): void {
     const token = localStorage.getItem('user');
-    if (token && this.moment.moment(jwtDecode(token).tokenExpirationDate).isAfter(this.moment.moment())) {
-      this.userService.setUser(jwtDecode(token));
+    if (token) {
+      const parsedToken = jwtDecode(token);
+      const email = parsedToken.sub;
+      const role = parsedToken.role[0].authority.replace('ROLE_', '');
       this.isLoggedIn$.next(true);
+      localStorage.setItem('user', token);
+      this.userService.setUser({ ...parsedToken, role, email });
       this.transport.setToken(token);
     } else {
       localStorage.removeItem('user');
@@ -70,9 +74,12 @@ export class AuthService {
 
   makeAfterLoginActions(token: string): void {
     this.isAuthInProgress = false;
+    const parsedToken = jwtDecode(token);
+    const email = parsedToken.sub;
+    const role = parsedToken.role[0].authority.replace('ROLE_', '');
     this.isLoggedIn$.next(true);
     localStorage.setItem('user', token);
-    this.userService.setUser(jwtDecode(token));
+    this.userService.setUser({ ...parsedToken, role, email });
     this.transport.setToken(token);
     this.router.navigate([this.retrieveTargetPath() || `profile/${this.userService.user.id}`]);
   }

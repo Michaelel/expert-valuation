@@ -9,7 +9,7 @@ import { QuestionnairePassComponent } from './questionnaire-pass/questionnaire-p
 const routes: Routes = [
   {
     path: '',
-    redirectTo: 'auth',
+    redirectTo: 'questionnaire-list',
     pathMatch: 'full',
   },
   {

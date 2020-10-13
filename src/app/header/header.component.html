@@ -20,7 +20,7 @@
     </div>
    <div class="right-header" (click)="redirectToProfile()">
        <span class="profile-link">
-           {{ userService.user?.firstName }} {{ userService.user?.lastName }}
+           {{ userService.user?.email }}
         </span>
        <mat-icon *ngIf="authService.isLoggedIn$ | async" (click)="authService.logOut()">exit_to_app</mat-icon>
    </div>

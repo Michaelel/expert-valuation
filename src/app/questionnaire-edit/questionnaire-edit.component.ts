@@ -66,7 +66,8 @@ export class QuestionnaireEditComponent implements OnInit {
 
   addNewAnswer(question: QuestionInterface): void {
     question.answers.push({
-      id: question.answers.length + 1,
+      id: null,
+      temporaryId: this.generateTemporaryId(),
       content: '',
       points: 0,
     });
@@ -75,7 +76,8 @@ export class QuestionnaireEditComponent implements OnInit {
 
   addNewQuestion(): void {
     this.dataService.questions.push({
-      id: this.dataService.questions.length + 1,
+      id: null,
+      temporaryId: this.generateTemporaryId(),
       content: (this.dataService.questions.length + 1).toString(),
       pointsLimit: 0,
       answers: [],
@@ -85,14 +87,12 @@ export class QuestionnaireEditComponent implements OnInit {
   }
 
   removeAnswer(question: QuestionInterface, answerToRemove: AnswerInterface): void {
-    question.answers.splice(answerToRemove.id - 1, 1);
-    question.answers = question.answers.map((answer, i) => ({ ...answer, id: i + 1}));
+    question.answers = question.answers.filter(answer => answer.temporaryId !== answerToRemove.temporaryId);
     this.markAsDirty();
   }
 
   removeQuestion(questionToRemove: QuestionInterface): void {
-    this.dataService.questions.splice(questionToRemove.id - 1, 1);
-    this.dataService.questions = this.dataService.questions.map((question, i) => ({ ...question, id: i + 1}));
+    this.dataService.questions = this.dataService.questions.filter(question => question.temporaryId !== questionToRemove.temporaryId);
     this.markAsDirty();
   }
 
@@ -151,6 +151,10 @@ export class QuestionnaireEditComponent implements OnInit {
 
   cancel(): void {
       this.populateValues();
+  }
+
+  generateTemporaryId(): number {
+    return Math.floor(Math.random() * 90000) + 10000;
   }
 
   get dateStartCtrl(): AbstractControl {

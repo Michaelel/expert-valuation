@@ -34,7 +34,8 @@ export class QuestionnairePassComponent implements OnInit {
 
   getInitedExpert(): ExpertInterface {
     return {
-      id: this.userService.user.id,
+      expertInfo: { id: this.userService.user.id },
+      questionnaireId: this.dataService.questionnaireId,
       answers: this.dataService.questions.map(question => ({
         questionId: question.id,
         answerId: null,
@@ -74,7 +75,7 @@ export class QuestionnairePassComponent implements OnInit {
   }
 
   get isPassButtonDisable(): boolean {
-    return !!this.expert.answers.find(answer => !answer.answerId);
+    return this.expert && !!this.expert.answers.find(answer => !answer.answerId);
   }
 
 }

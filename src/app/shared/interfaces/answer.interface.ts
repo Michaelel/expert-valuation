@@ -1,5 +1,6 @@
 export interface AnswerInterface {
-    id: number;
+    id?: number;
+    temporaryId?: number;
     content: string;
     points: number;
 }

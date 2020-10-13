@@ -3,6 +3,7 @@ import { QuestionInterface } from '../shared/interfaces/question.interface';
 import { Observable } from 'rxjs';
 import { ApiService } from '../shared/services/api.service';
 import { QuestionnaireInterface } from '../shared/interfaces/questionnaire.interface';
+import { map } from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root',
@@ -22,11 +23,28 @@ export class QuestionnaireService {
   }
 
   getQuestionnaire(): Observable<QuestionnaireInterface> {
-    return this.api.getQuestionnaire(this.questionnaireId);
+    return this.api.getQuestionnaire(this.questionnaireId).pipe(
+      map(questionnaire => this.setTemporaryIdsForQuestionnaire(questionnaire)),
+    );
   }
 
   editQuestionnaire(questionnaire: QuestionnaireInterface): Observable<QuestionnaireInterface> {
-    return this.api.editQuestionnaire({ ...questionnaire, questions: this.questions, id: this.questionnaireId });
+    return this.api.editQuestionnaire({ ...questionnaire, questions: this.questions, id: this.questionnaireId }).pipe(
+      map(questionnaire => this.setTemporaryIdsForQuestionnaire(questionnaire)),
+    );
+  }
+
+  setTemporaryIdsForQuestionnaire(questionnaire: QuestionnaireInterface): QuestionnaireInterface {
+    return {
+      ...questionnaire,
+      questions: questionnaire.questions.map(question => (
+        {
+          ...question,
+          temporaryId: question.id,
+          answers: question.answers.map(answer => ({ ...answer, temporaryId: answer.id })),
+        }),
+      ),
+    };
   }
 
 }
