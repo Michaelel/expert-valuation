@@ -6,7 +6,7 @@
                     [disabled]="!editable"
                     aria-labelledby="radio-group-label"
                     class="radio-group"
-                    [(ngModel)]="expertAnswers.answers[i].answerId">
+                    [(ngModel)]="expertAnswers.questions ? expertAnswers.questions[i].answers[0].id : expertAnswers.answers[i].answerId">
                 <mat-radio-button class="radio-button" *ngFor="let answer of question.answers" [value]="answer.id">
                     {{ answer.content }}
                 </mat-radio-button>

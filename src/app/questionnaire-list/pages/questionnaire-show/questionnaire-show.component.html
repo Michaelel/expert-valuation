@@ -13,7 +13,7 @@
             </div>
             <div class="id">{{ questionnaire?.id }}</div>
         </div>
-        <div class="questions" *ngIf="expert">
+        <div class="questions" *ngIf="expert && questionnaire.questions">
             <div class="questions-title">Вопросы</div>
             <app-questionnaire-pass-form [questions]="questionnaire.questions" [expertAnswers]="expert" [editable]="false"></app-questionnaire-pass-form>
         </div>

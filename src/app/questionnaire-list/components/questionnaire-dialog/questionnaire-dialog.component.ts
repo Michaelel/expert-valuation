@@ -7,6 +7,7 @@ import { QuestionnaireListService } from '../../questionnaire-list.service';
 import { QuestionnaireService } from '../../../questionnaire-edit/questionnaire.service';
 import { QuestionnairePassService } from '../../../questionnaire-pass/questionnaire-pass.service';
 import { pluck } from 'rxjs/operators';
+import { QuestionInterface } from '../../../shared/interfaces/question.interface';
 
 @Component({
   selector: 'app-questionnaire-dialog',
@@ -20,8 +21,10 @@ export class QuestionnaireDialogComponent implements OnInit {
   constructor(
       public passService: QuestionnairePassService,
       private dialogRef: MatDialogRef<QuestionnaireDialogComponent>,
-      @Inject(MAT_DIALOG_DATA) public data: { expert: ExpertInterface, verificationMode?: boolean },
-  ) { }
+      @Inject(MAT_DIALOG_DATA) public data: { expert: ExpertInterface, verificationMode?: boolean, questions?: QuestionInterface[] },
+  ) {
+    this.passService.questionnaireId = this.data.expert.id;
+  }
 
   ngOnInit(): void {
     this.getQuestionnaire();

@@ -1,7 +1,7 @@
 <div mat-dialog-title>
     {{ data.expert.expertInfo.firstName }} {{ data.expert.expertInfo.lastName }}
 </div>
-<div mat-dialog-content>
+<div mat-dialog-content *ngIf="passService.questions && data.expert">
     <component-state [state]="state" [getData]="getQuestionnaire">
         <app-questionnaire-pass-form [expertAnswers]="data.expert" [questions]="passService.questions" [editable]="false"></app-questionnaire-pass-form>
     </component-state>

@@ -63,12 +63,12 @@ export class QuestionnaireResultComponent implements OnInit {
     );
   }
 
-  goExpertResult(expertId: number): void {
-    this.api.getQuestionnaireExpertResult(this.dataService.questionnaireId, expertId).subscribe(
+  goExpertResult(expert: ExpertInterface): void {
+    this.api.getQuestionnaireExpertResult(this.dataService.questionnaireId, expert.id).subscribe(
       res => this.dialog.open(
         QuestionnaireDialogComponent,
         {
-          data: { expert: res },
+          data: { expert: { ...res, expertInfo: expert } },
         },
       ),
     );

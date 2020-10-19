@@ -9,6 +9,7 @@ export interface ExpertInterface {
     lastName?: string;
     email?: string;
     phone?: string;
+    questions?: any;
     answers: ExpertAnswerInterface[];
     competence?: number;
 }

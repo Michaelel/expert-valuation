@@ -10,6 +10,7 @@ import { ApiService } from '../../../shared/services/api.service';
 import { filter, switchMap } from 'rxjs/operators';
 import { pipe } from 'rxjs';
 import { QuestionnaireDialogComponent } from '../../../questionnaire-list/components/questionnaire-dialog/questionnaire-dialog.component';
+import { ExpertInterface } from '../../../shared/interfaces/expert.interface';
 
 @Component({
   selector: 'app-expert-list',
@@ -48,20 +49,20 @@ export class ExpertListComponent implements OnInit {
     );
   }
 
-  verifyUser(expertId: number): void {
-    this.api.getQuestionnaireExpertResult(1, expertId).pipe(
+  verifyUser(expert: ExpertInterface): void {
+    this.api.getQuestionnaireExpertResult(1, expert.id).pipe(
         switchMap(res => this.dialog.open(
               QuestionnaireDialogComponent,
               {
                 data: {
                   verificationMode: true,
-                  expert: res.expertsResults[0],
+                  expert: { ...res, expertInfo: expert },
                 },
               },
             ).afterClosed(),
         ),
         filter(res => !!res),
-        switchMap(res => this.api.passVerificationProcess(expertId, res.isVerified)),
+        switchMap(res => this.api.passVerificationProcess(expert.id, res.isVerified)),
     ).subscribe();
   }
 
