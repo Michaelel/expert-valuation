@@ -5,6 +5,7 @@ import { defineState } from '../../../../environments/pure-functions';
 import { UserService } from '../../../shared/services/user.service';
 import { QuestionnairePassService } from '../../../questionnaire-pass/questionnaire-pass.service';
 import { QuestionnaireInterface } from '../../../shared/interfaces/questionnaire.interface';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-questionnaire-show',
@@ -22,7 +23,10 @@ export class QuestionnaireShowComponent implements OnInit {
   constructor(
       private userService: UserService,
       public passService: QuestionnairePassService,
-  ) { }
+      private route: ActivatedRoute,
+  ) {
+    this.passService.questionnaireId = +this.route.snapshot.paramMap.get('questionnaireId');
+  }
 
   ngOnInit(): void {
     this.getQuestionnaire();

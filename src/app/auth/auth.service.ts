@@ -8,6 +8,7 @@ import { MomentService } from '../shared/services/moment.service';
 import { Router } from '@angular/router';
 import * as jwtDecode from 'jwt-decode';
 import { BehaviorSubject, Subject } from 'rxjs';
+import { switchMap } from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root',
@@ -66,7 +67,9 @@ export class AuthService {
 
   signup(payload: SignupRequestInterface): void {
     this.isAuthInProgress = true;
-    this.api.signup(payload).subscribe(
+    this.api.signup(payload).pipe(
+      switchMap(() => this.api.login({ email: payload.email, password: payload.password })),
+    ).subscribe(
         res => this.makeAfterLoginActions(res),
         e => alert(e || e.message),
     );

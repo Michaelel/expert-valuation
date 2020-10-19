@@ -43,6 +43,6 @@ export class TransportService {
   }
 
   get headersForRequest(): { [param: string]: string | string[] }  {
-    return { ...this.headers, 'Authorization': `Bearer ${this.token}` };
+    return this.token ? { ...this.headers, 'Authorization': `${this.token}` } : this.headers;
   }
 }

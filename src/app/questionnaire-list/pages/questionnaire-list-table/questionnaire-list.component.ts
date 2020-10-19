@@ -53,6 +53,7 @@ export class QuestionnaireListComponent implements OnInit {
   }
 
   goToShowOrResultQuestionnaire(questionnaire: QuestionnaireInterface): void {
+    this.dataService.activeQuestionnaire = questionnaire;
     this.router.navigate([`questionnaire-list/${this.isDateBeforeNow(questionnaire.dateStart) ? 'result' : 'show'}/${questionnaire.id}`]);
   }
 

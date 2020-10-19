@@ -69,7 +69,7 @@ export class QuestionnairePassComponent implements OnInit {
         },
         e => {
           this.state = ComponentState.Success;
-          alert(e);
+          alert(e.message || e);
         },
     );
   }

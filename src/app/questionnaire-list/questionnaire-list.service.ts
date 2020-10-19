@@ -3,6 +3,7 @@ import { QuestionnaireInterface } from '../shared/interfaces/questionnaire.inter
 import { Observable } from 'rxjs';
 import { ApiService } from '../shared/services/api.service';
 import { QuestionnaireResultInterface } from '../shared/interfaces/questionnaire-result.interface';
+import { ExpertInterface } from '../shared/interfaces/expert.interface';
 
 @Injectable({
   providedIn: 'root',
@@ -12,12 +13,13 @@ export class QuestionnaireListService {
   questionnaireId: number;
 
   questionnaireList: QuestionnaireInterface[];
+  activeQuestionnaire: QuestionnaireInterface;
 
   constructor(
       private api: ApiService,
   ) { }
 
-  getQuestionnaireList(token: string): Observable<QuestionnaireInterface[]> {
+  getQuestionnaireList(token?: string): Observable<QuestionnaireInterface[]> {
     return this.api.getQuestionnaireList(token);
   }
 
@@ -25,7 +27,7 @@ export class QuestionnaireListService {
     return this.api.createQuestionnaire(payload);
   }
 
-  getQuestionnaireResult(): Observable<QuestionnaireResultInterface> {
+  getQuestionnaireResult(): Observable<ExpertInterface[]> {
     return this.api.getQuestionnaireResult(this.questionnaireId);
   }
 }

@@ -30,7 +30,7 @@
             <ng-container matColumnDef="action">
                 <mat-header-cell *matHeaderCellDef></mat-header-cell>
                 <mat-cell *matCellDef="let element">
-                    <mat-icon *ngIf="userService.isAdmin && !element.isVerified" (click)="verifyUser(element.id)">verified_user</mat-icon>
+                    <mat-icon *ngIf="userService.isAdmin && !element.isVerified" (click)="$event.stopPropagation(); verifyUser(element.id)">verified_user</mat-icon>
                 </mat-cell>
             </ng-container>
 

@@ -2,49 +2,49 @@
 <mat-card>
     <component-state [state]="state" [getData]="getQuestionnaireResult">
         <div class="questionnaire-header">
-            <div class="card-title">{{ questionnaireResult?.title }}</div>
+            <div class="card-title">{{ dataService.activeQuestionnaire?.title }}</div>
             <div class="date-start">
                 <div class="key">
                     Дата начала:
                 </div>
                 <div class="value">
-                    {{ questionnaireResult?.dateStart }}
+                    {{ dataService.activeQuestionnaire?.dateStart }}
                 </div>
             </div>
-            <div class="id">{{ questionnaireResult?.id }}</div>
+            <div class="id">{{ dataService.activeQuestionnaire?.id }}</div>
         </div>
         <div class="experts">
             <div class="experts-title">
                 Результаты экспертов
             </div>
             <component-state [state]="expertsState">
-                <mat-table [dataSource]="questionnaireResult?.expertsResults" class="mat-elevation-z8">
+                <mat-table [dataSource]="questionnaireResult" class="mat-elevation-z8">
                     <!-- Position Column -->
                     <ng-container matColumnDef="id">
                         <mat-header-cell *matHeaderCellDef>Id</mat-header-cell>
-                        <mat-cell *matCellDef="let element"> {{element.expertInfo.id}} </mat-cell>
+                        <mat-cell *matCellDef="let element"> {{element.id}} </mat-cell>
                     </ng-container>
 
                     <!-- Name Column -->
                     <ng-container matColumnDef="name">
                         <mat-header-cell *matHeaderCellDef> Имя </mat-header-cell>
-                        <mat-cell *matCellDef="let element"> {{element.expertInfo.firstName}} {{ element.expertInfo.lastName }} </mat-cell>
+                        <mat-cell *matCellDef="let element"> {{element.firstName}} {{ element.lastName }} </mat-cell>
                     </ng-container>
 
                     <!-- Weight Column -->
                     <ng-container matColumnDef="email">
                         <mat-header-cell *matHeaderCellDef>Email</mat-header-cell>
-                        <mat-cell *matCellDef="let element"> {{element.expertInfo.email}} </mat-cell>
+                        <mat-cell *matCellDef="let element"> {{element.email}} </mat-cell>
                     </ng-container>
 
                     <!-- Weight Column -->
                     <ng-container matColumnDef="phone">
                         <mat-header-cell *matHeaderCellDef>Телефон</mat-header-cell>
-                        <mat-cell *matCellDef="let element"> {{element.expertInfo.phone}} </mat-cell>
+                        <mat-cell *matCellDef="let element"> {{element.phone}} </mat-cell>
                     </ng-container>
 
                     <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
-                    <mat-row (click)="goExpertResult(row)" *matRowDef="let row; columns: displayedColumns;"></mat-row>
+                    <mat-row (click)="goExpertResult(row.id)" *matRowDef="let row; columns: displayedColumns;"></mat-row>
                 </mat-table>
             </component-state>
         </div>

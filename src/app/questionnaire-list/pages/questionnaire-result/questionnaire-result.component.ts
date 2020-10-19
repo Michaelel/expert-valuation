@@ -7,6 +7,8 @@ import { defineState } from '../../../../environments/pure-functions';
 import { MatDialog } from '@angular/material/dialog';
 import { QuestionnaireDialogComponent } from '../../components/questionnaire-dialog/questionnaire-dialog.component';
 import { ExpertInterface } from '../../../shared/interfaces/expert.interface';
+import { map, switchMap } from 'rxjs/operators';
+import { ApiService } from '../../../shared/services/api.service';
 
 @Component({
   selector: 'app-questionnaire-result',
@@ -21,18 +23,29 @@ export class QuestionnaireResultComponent implements OnInit {
   displayedColumns = ['id', 'name', 'email', 'phone'];
 
 
-  questionnaireResult: QuestionnaireResultInterface;
+  questionnaireResult: ExpertInterface[];
 
   constructor(
-      private dataService: QuestionnaireListService,
+      public dataService: QuestionnaireListService,
       private route: ActivatedRoute,
       private dialog: MatDialog,
+      private api: ApiService,
   ) {
     this.dataService.questionnaireId = +this.route.snapshot.paramMap.get('questionnaireId');
   }
 
   ngOnInit(): void {
-    this.getQuestionnaireResult();
+    this.dataService.activeQuestionnaire
+      ? this.getQuestionnaireResult()
+      : this.dataService.getQuestionnaireList().pipe(
+        map(res => res.find(item => item.id === this.dataService.questionnaireId))
+      ).subscribe(
+        res => {
+          this.dataService.activeQuestionnaire = res;
+          this.getQuestionnaireResult();
+        },
+        e => alert(e.message || e),
+      );
   }
 
   getQuestionnaireResult = (): void => {
@@ -41,7 +54,7 @@ export class QuestionnaireResultComponent implements OnInit {
         res => {
           this.state = ComponentState.Success;
           this.questionnaireResult = res;
-          this.expertsState = defineState(res.expertsResults);
+          this.expertsState = defineState(res);
         },
         e => {
           this.state = ComponentState.Error;
@@ -50,12 +63,14 @@ export class QuestionnaireResultComponent implements OnInit {
     );
   }
 
-  goExpertResult(expertResult: ExpertInterface): void {
-    this.dialog.open(
+  goExpertResult(expertId: number): void {
+    this.api.getQuestionnaireExpertResult(this.dataService.questionnaireId, expertId).subscribe(
+      res => this.dialog.open(
         QuestionnaireDialogComponent,
         {
-          data: { expert: expertResult },
+          data: { expert: res },
         },
+      ),
     );
   }
 
