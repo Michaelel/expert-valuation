@@ -9,6 +9,7 @@ import { MatBottomSheet } from '@angular/material/bottom-sheet';
 import { CreateQuestionnaireComponent } from '../../components/create-questionnaire/create-questionnaire.component';
 import { filter, switchMap, tap } from 'rxjs/operators';
 import { UserService } from '../../../shared/services/user.service';
+import { MatDialog } from '@angular/material/dialog';
 
 @Component({
   selector: 'app-questionnaire-list',
@@ -25,7 +26,7 @@ export class QuestionnaireListComponent implements OnInit {
       public dataService: QuestionnaireListService,
       private router: Router,
       private moment: MomentService,
-      private bottomSheet: MatBottomSheet,
+      private dialog: MatDialog,
       public userService: UserService,
   ) { }
 
@@ -66,10 +67,10 @@ export class QuestionnaireListComponent implements OnInit {
   }
 
   goToCreateQuestionnaire(): void {
-    this.bottomSheet.open(CreateQuestionnaireComponent).afterDismissed().pipe(
+    this.dialog.open(CreateQuestionnaireComponent, { width: '400px' }).afterClosed().pipe(
         filter(res => !!res),
     ).subscribe(
-        res => this.router.navigate([`questionnaire-list/edit/${res}`]),
+        res => this.router.navigate([`questionnaire-list/edit/${res.id}`, { questionsCount: res.questionsCount }]),
     );
   }
 

@@ -12,81 +12,126 @@
                             [dateCtrl]="dateStartCtrl"
                             placeholder="Дата начала"
                     ></app-date-picker>
+                  <app-date-picker
+                    *ngIf="dataService.questionnaire?.dateStart"
+                    [dateCtrl]="dateEndCtrl"
+                    placeholder="Дата окончания"
+                  ></app-date-picker>
                 </div>
                 <div class="flex-1 empty-flex"></div>
             </div>
         </form>
-        <table mat-table
-               [dataSource]="dataService.questions" multiTemplateDataRows
-               class="mat-elevation-z8">
-            <ng-container matColumnDef="{{column}}" *ngFor="let column of columnsToDisplay">
-                <th mat-header-cell *matHeaderCellDef> {{tableColumnEnum[column]}} </th>
-                <td mat-cell *matCellDef="let element">
-                    <span *ngIf="column !== 'action'">{{ element[column] }}</span>
-                    <mat-icon *ngIf="column === 'action'" class="mat-primary" (click)="$event.stopPropagation(); removeQuestion(element)">delete</mat-icon>
-                </td>
-            </ng-container>
+        <div class="question" *ngFor="let question of dataService.questions; let i = index">
+          <div class="question-content">
+            <div class="flex-1 fd-column d-flex">
+              <mat-form-field>
+                <input matInput placeholder="Вопрос" [(ngModel)]="question.content">
+              </mat-form-field>
+              <mat-form-field>
+                <input matInput placeholder="Балл" [(ngModel)]="question.pointsLimit">
+              </mat-form-field>
+              <mat-form-field *ngIf="!question.answers.length">
+                <input matInput type="number" placeholder="Количество ответов" [(ngModel)]="question.answersCount">
+              </mat-form-field>
+              <button mat-button
+                      *ngIf="!question.answers.length"
+                      [disabled]="!(question.answersCount > 0)"
+                      class="mat-accent add-answers-btn"
+                      (click)="addAnswers(question)">
+                Добавить ответы
+              </button>
+            </div>
+            <div class="flex-1"></div>
+          </div>
+          <div class="answers">
+            <div class="answer" *ngFor="let answer of question.answers">
+              <div class="flex-1 align-items-center">
+                <mat-form-field class="mr-20">
+                  <input matInput placeholder="Ответ" [(ngModel)]="answer.content">
+                </mat-form-field>
+                <mat-form-field class="mr-20">
+                  <input matInput placeholder="Балл" [(ngModel)]="answer.points">
+                </mat-form-field>
+                <button mat-icon-button class="mat-accent" *ngIf="question.answers.length" (click)="removeAnswer(question, answer)"><mat-icon>clear</mat-icon></button>
+              </div>
+              <div class="flex-1"></div>
+            </div>
+            <button mat-icon-button class="mat-accent" *ngIf="question.answers.length" (click)="addNewAnswer(question)"><mat-icon>add</mat-icon></button>
+            <button mat-icon-button class="mat-accent remove-question" (click)="removeQuestion(question)"><mat-icon>clear</mat-icon></button>
+            <div class="question-number">{{ i + 1 }}</div>
+          </div>
+        </div>
+<!--        <table mat-table-->
+<!--               [dataSource]="dataService.questions" multiTemplateDataRows-->
+<!--               class="mat-elevation-z8">-->
+<!--            <ng-container matColumnDef="{{column}}" *ngFor="let column of columnsToDisplay">-->
+<!--                <th mat-header-cell *matHeaderCellDef> {{tableColumnEnum[column]}} </th>-->
+<!--                <td mat-cell *matCellDef="let element">-->
+<!--                    <span *ngIf="column !== 'action'">{{ element[column] }}</span>-->
+<!--                    <mat-icon *ngIf="column === 'action'" class="mat-primary" (click)="$event.stopPropagation(); removeQuestion(element)">delete</mat-icon>-->
+<!--                </td>-->
+<!--            </ng-container>-->
 
-            <!-- Expanded Content Column - The detail row is made up of this one column that spans across all columns -->
-            <ng-container matColumnDef="expandedDetail">
-                <td mat-cell *matCellDef="let element" [attr.colspan]="columnsToDisplay.length">
-                    <div class="example-element-detail"
-                         [@detailExpand]="element == expandedElement ? 'expanded' : 'collapsed'">
+<!--            &lt;!&ndash; Expanded Content Column - The detail row is made up of this one column that spans across all columns &ndash;&gt;-->
+<!--            <ng-container matColumnDef="expandedDetail">-->
+<!--                <td mat-cell *matCellDef="let element" [attr.colspan]="columnsToDisplay.length">-->
+<!--                    <div class="example-element-detail"-->
+<!--                         [@detailExpand]="element == expandedElement ? 'expanded' : 'collapsed'">-->
 
-                        <div class="edit-form">
-                            <div class="edit-question">
-                                <div class="edit-content">
-                                    <mat-form-field>
-                                        <input matInput placeholder="Вопрос" (change)="markAsDirty()" [(ngModel)]="element.content">
-                                    </mat-form-field>
-                                </div>
-                                <div class="edit-question-count">
-                                    <mat-form-field>
-                                        <input matInput placeholder="Максимальное количество баллов" type="number" min="0" (change)="handleAnswersPoints(element)" [(ngModel)]="element.pointsLimit">
-                                    </mat-form-field>
-                                </div>
-                            </div>
+<!--                        <div class="edit-form">-->
+<!--                            <div class="edit-question">-->
+<!--                                <div class="edit-content">-->
+<!--                                    <mat-form-field>-->
+<!--                                        <input matInput placeholder="Вопрос" (change)="markAsDirty()" [(ngModel)]="element.content">-->
+<!--                                    </mat-form-field>-->
+<!--                                </div>-->
+<!--                                <div class="edit-question-count">-->
+<!--                                    <mat-form-field>-->
+<!--                                        <input matInput placeholder="Максимальное количество баллов" type="number" min="0" (change)="handleAnswersPoints(element)" [(ngModel)]="element.pointsLimit">-->
+<!--                                    </mat-form-field>-->
+<!--                                </div>-->
+<!--                            </div>-->
 
-                            <h3>Відповіді</h3>
+<!--                            <h3>Відповіді</h3>-->
 
-                            <div class="answer" *ngFor="let answer of element.answers">
-                                <div class="edit-answer">
-                                    <div class="edit-content">
-                                        <mat-form-field>
-                                            <input matInput placeholder="Ответ" (change)="markAsDirty()" [(ngModel)]="answer.content">
-                                        </mat-form-field>
-                                    </div>
-                                    <div class="edit-answer-count">
-                                        <mat-form-field>
-                                            <input matInput placeholder="Баллы"
-                                                   type="number"
-                                                   min="0"
-                                                   [attr.max]="element.pointsLimit"
-                                                   (change)="handleAnswerPoints(element, answer)"
-                                                   [(ngModel)]="answer.points">
-                                        </mat-form-field>
-                                    </div>
-                                    <div class="remove-answer">
-                                        <button mat-icon-button class="mat-primary" (click)="removeAnswer(element, answer)"><mat-icon>delete</mat-icon></button>
-                                    </div>
-                                </div>
-                            </div>
-                            <button mat-button class="add-answer-btn mat-accent" (click)="addNewAnswer(element)">Добавить ответ</button>
-                        </div>
-                    </div>
-                </td>
-            </ng-container>
+<!--                            <div class="answer" *ngFor="let answer of element.answers">-->
+<!--                                <div class="edit-answer">-->
+<!--                                    <div class="edit-content">-->
+<!--                                        <mat-form-field>-->
+<!--                                            <input matInput placeholder="Ответ" (change)="markAsDirty()" [(ngModel)]="answer.content">-->
+<!--                                        </mat-form-field>-->
+<!--                                    </div>-->
+<!--                                    <div class="edit-answer-count">-->
+<!--                                        <mat-form-field>-->
+<!--                                            <input matInput placeholder="Баллы"-->
+<!--                                                   type="number"-->
+<!--                                                   min="0"-->
+<!--                                                   [attr.max]="element.pointsLimit"-->
+<!--                                                   (change)="handleAnswerPoints(element, answer)"-->
+<!--                                                   [(ngModel)]="answer.points">-->
+<!--                                        </mat-form-field>-->
+<!--                                    </div>-->
+<!--                                    <div class="remove-answer">-->
+<!--                                        <button mat-icon-button class="mat-primary" (click)="removeAnswer(element, answer)"><mat-icon>delete</mat-icon></button>-->
+<!--                                    </div>-->
+<!--                                </div>-->
+<!--                            </div>-->
+<!--                            <button mat-button class="add-answer-btn mat-accent" (click)="addNewAnswer(element)">Добавить ответ</button>-->
+<!--                        </div>-->
+<!--                    </div>-->
+<!--                </td>-->
+<!--            </ng-container>-->
 
-            <tr mat-header-row *matHeaderRowDef="columnsToDisplay"></tr>
-            <tr mat-row *matRowDef="let element; columns: columnsToDisplay;"
-                class="example-element-row"
-                [class.example-expanded-row]="expandedElement === element"
-                (click)="expandedElement = expandedElement === element ? null : element">
-            </tr>
-            <tr mat-row *matRowDef="let row; columns: ['expandedDetail']" class="example-detail-row"></tr>
-        </table>
+<!--            <tr mat-header-row *matHeaderRowDef="columnsToDisplay"></tr>-->
+<!--            <tr mat-row *matRowDef="let element; columns: columnsToDisplay;"-->
+<!--                class="example-element-row"-->
+<!--                [class.example-expanded-row]="expandedElement === element"-->
+<!--                (click)="expandedElement = expandedElement === element ? null : element">-->
+<!--            </tr>-->
+<!--            <tr mat-row *matRowDef="let row; columns: ['expandedDetail']" class="example-detail-row"></tr>-->
+<!--        </table>-->
 
-        <button mat-button class="mat-accent add-question-btn" (click)="addNewQuestion()">Добавить новый вопрос</button>
+<!--        <button mat-button class="mat-accent add-question-btn" (click)="addNewQuestion()">Добавить новый вопрос</button>-->
 
         <div class="actions">
             <button mat-raised-button class="mat-primary" [disabled]="(!hasChanges && questionnaireForm.pristine) || questionnaireForm.invalid" (click)="save()">Сохранить</button>
@@ -94,3 +139,6 @@
         </div>
     </component-state>
 </mat-card>
+
+<button class="add-item-button" mat-fab (click)="addNewQuestion()" matTooltip="Добавить вопрос"><mat-icon>add</mat-icon></button>
+

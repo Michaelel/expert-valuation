@@ -1,19 +1,28 @@
-<div mat-dialog-title>Создание опроса</div>
+<div class="mb-20 mr-20 mt-20 ml-20">
+  <div mat-dialog-title>Создание опроса</div>
 
-<div>
+  <div>
     <form [formGroup]="questionnaireForm">
-        <mat-form-field>
-            <input matInput placeholder="Название" formControlName="title">
-        </mat-form-field>
+      <mat-form-field>
+        <input matInput placeholder="Название" formControlName="title">
+      </mat-form-field>
 
-        <app-date-picker
-                [dateCtrl]="dateStartCtrl"
-                placeholder="Дата начала"
-        ></app-date-picker>
+      <app-date-picker
+        [dateCtrl]="dateStartCtrl"
+        placeholder="Дата начала"
+      ></app-date-picker>
+      <app-date-picker
+        [dateCtrl]="dateEndCtrl"
+        placeholder="Дата кончания"
+      ></app-date-picker>
+      <mat-form-field>
+        <input matInput type="number" placeholder="Количество вопросов" formControlName="questionsCount">
+      </mat-form-field>
     </form>
-</div>
+  </div>
 
-<div class="actions">
+  <div class="actions">
     <button mat-button mat-dialog-close class="uppercase cancel-btn">Отмена</button>
     <button mat-button [disabled]="questionnaireForm.invalid" (click)="create()" class="mat-primary uppercase">Создать</button>
+  </div>
 </div>

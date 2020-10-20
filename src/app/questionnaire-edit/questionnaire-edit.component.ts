@@ -15,19 +15,13 @@ import { DEFAULT_DATE_FORMAT } from '../../environments/constants';
   selector: 'app-questionnaire-edit',
   templateUrl: './questionnaire-edit.component.html',
   styleUrls: ['./questionnaire-edit.component.sass'],
-  animations: [
-    trigger('detailExpand', [
-      state('collapsed', style({height: '0px', minHeight: '0'})),
-      state('expanded', style({height: '*'})),
-      transition('expanded <=> collapsed', animate('225ms cubic-bezier(0.4, 0.0, 0.2, 1)')),
-    ]),
-  ],
 })
 export class QuestionnaireEditComponent implements OnInit {
 
   questionnaireForm = this.fb.group({
       title: ['', Validators.required],
       dateStart: ['', Validators.required],
+      dateEnd: ['', Validators.required],
                                     });
   state = ComponentState.Loading;
 
@@ -35,6 +29,9 @@ export class QuestionnaireEditComponent implements OnInit {
 
   columnsToDisplay = ['id', 'content', 'pointsLimit', 'action'];
   expandedElement: QuestionInterface | null;
+
+  public isCreateMode: boolean;
+  public questionsCount: number;
 
   readonly tableColumnEnum = TableColumnsEnum;
 
@@ -45,6 +42,8 @@ export class QuestionnaireEditComponent implements OnInit {
       private moment: MomentService,
   ) {
     this.dataService.questionnaireId = +this.route.snapshot.paramMap.get('questionnaireId');
+    this.questionsCount = +this.route.snapshot.paramMap.get('questionsCount');
+    this.isCreateMode = !!this.questionsCount;
   }
 
   ngOnInit(): void {
@@ -74,11 +73,21 @@ export class QuestionnaireEditComponent implements OnInit {
     this.markAsDirty();
   }
 
+  addAnswers(question: QuestionInterface): void {
+    question.answers = Array.from({length: question.answersCount}, () => null);
+    question.answers = question.answers.map(() => ({
+      id: null,
+      temporaryId: this.generateTemporaryId(),
+      content: '',
+      points: 0,
+    }));
+  }
+
   addNewQuestion(): void {
     this.dataService.questions.push({
       id: null,
       temporaryId: this.generateTemporaryId(),
-      content: (this.dataService.questions.length + 1).toString(),
+      content: null,
       pointsLimit: 0,
       answers: [],
     });
@@ -102,6 +111,16 @@ export class QuestionnaireEditComponent implements OnInit {
         res => {
           this.state = ComponentState.Success;
           this.dataService.questionnaire = res;
+          if (this.isCreateMode) {
+            this.dataService.questionnaire.questions = Array.from({length: this.questionsCount}, () => null);
+            this.dataService.questionnaire.questions = this.dataService.questionnaire.questions.map(() => ({
+              id: null,
+              temporaryId: this.generateTemporaryId(),
+              content: '',
+              pointsLimit: null,
+              answers: [],
+            }));
+          }
           this.populateValues();
         },
         e => {
@@ -159,5 +178,9 @@ export class QuestionnaireEditComponent implements OnInit {
 
   get dateStartCtrl(): AbstractControl {
       return this.questionnaireForm.get('dateStart');
+  }
+
+  get dateEndCtrl(): AbstractControl {
+    return this.questionnaireForm.get('dateEnd');
   }
 }

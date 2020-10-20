@@ -4,6 +4,7 @@ import { AbstractControl, FormBuilder, Validators } from '@angular/forms';
 import { QuestionnaireService } from '../../../questionnaire-edit/questionnaire.service';
 import { QuestionnaireListService } from '../../questionnaire-list.service';
 import { MomentService } from '../../../shared/services/moment.service';
+import { MatDialogRef } from '@angular/material/dialog';
 
 @Component({
   selector: 'app-create-questionnaire',
@@ -15,10 +16,12 @@ export class CreateQuestionnaireComponent implements OnInit {
   questionnaireForm = this.fb.group({
     title: ['', Validators.required],
     dateStart: ['', Validators.required],
+    dateEnd: ['', Validators.required],
+    questionsCount: ['', Validators.required],
   });
 
   constructor(
-      private bottomSheetRef: MatBottomSheetRef<CreateQuestionnaireComponent>,
+      private bottomSheetRef: MatDialogRef<CreateQuestionnaireComponent>,
       private questionnaireService: QuestionnaireListService,
       private fb: FormBuilder,
       private moment: MomentService,
@@ -31,6 +34,10 @@ export class CreateQuestionnaireComponent implements OnInit {
     return this.questionnaireForm.get('dateStart');
   }
 
+  get dateEndCtrl(): AbstractControl {
+    return this.questionnaireForm.get('dateEnd');
+  }
+
   create(): void {
     this.questionnaireService.createQuestionnaire(
         {
@@ -39,7 +46,7 @@ export class CreateQuestionnaireComponent implements OnInit {
           dateStart: this.moment.convertFromViewToRequest(this.questionnaireForm.value.dateStart),
         },
     ).subscribe(
-        res => this.bottomSheetRef.dismiss(res.id),
+        res => this.bottomSheetRef.close({ id: res.id, questionsCount: this.questionnaireForm.value.questionsCount }),
         e => alert(e),
     );
   }

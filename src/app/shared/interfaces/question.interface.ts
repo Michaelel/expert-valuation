@@ -6,4 +6,5 @@ export interface QuestionInterface {
     content: string;
     pointsLimit: number;
     answers: AnswerInterface[];
+    answersCount?: number;
 }
