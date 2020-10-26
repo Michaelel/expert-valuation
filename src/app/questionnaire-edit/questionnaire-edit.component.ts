@@ -160,6 +160,7 @@ export class QuestionnaireEditComponent implements OnInit {
         {
             ...this.questionnaireForm.value,
             dateStart: this.moment.convertFromViewToRequest(this.questionnaireForm.value.dateStart),
+            dateEnd: this.moment.convertFromViewToRequest(this.questionnaireForm.value.dateEnd),
         },
     ).subscribe(
         res => {
