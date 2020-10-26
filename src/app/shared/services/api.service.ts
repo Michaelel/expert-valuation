@@ -63,6 +63,10 @@ export class ApiService {
     return this.transport.get(`answers/users/${id}`);
   }
 
+  deleteQuestionnaire(id: number): Observable<void> {
+    return this.transport.delete(`questionnaire/${id}`);
+  }
+
   getQuestionnaireExpertResult(id: number, expertId: number): Observable<QuestionnaireResultInterface> {
     return this.transport.get(`answers/users/${expertId}/questionnaires/${id}`);
   }

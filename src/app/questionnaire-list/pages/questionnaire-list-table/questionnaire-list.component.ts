@@ -7,9 +7,12 @@ import { QuestionnaireInterface } from '../../../shared/interfaces/questionnaire
 import { MomentService } from '../../../shared/services/moment.service';
 import { MatBottomSheet } from '@angular/material/bottom-sheet';
 import { CreateQuestionnaireComponent } from '../../components/create-questionnaire/create-questionnaire.component';
-import { filter, switchMap, tap } from 'rxjs/operators';
+import { debounceTime, filter, switchMap, tap } from 'rxjs/operators';
 import { UserService } from '../../../shared/services/user.service';
 import { MatDialog } from '@angular/material/dialog';
+import { FormControl } from '@angular/forms';
+import { DEFAULT_DATE_FORMAT } from '../../../../environments/constants';
+import { QuestionnaireStatusEnum } from './questionnaire-status.enum';
 
 @Component({
   selector: 'app-questionnaire-list',
@@ -20,8 +23,9 @@ export class QuestionnaireListComponent implements OnInit {
 
   state = ComponentState.Loading;
 
-  displayedColumns = ['id', 'title', 'dateStart', 'action'];
+  statusEnum = QuestionnaireStatusEnum;
 
+  displayedColumns = ['id', 'title', 'dateStart', 'dateEnd', 'action'];
   constructor(
       public dataService: QuestionnaireListService,
       private router: Router,
@@ -38,7 +42,19 @@ export class QuestionnaireListComponent implements OnInit {
     this.state = ComponentState.Loading;
     this.dataService.getQuestionnaireList('').subscribe(
         res => {
-          this.dataService.questionnaireList = res;
+          this.dataService.questionnaireList = res.map(questionnaire => {
+            let status;
+            if (this.moment.moment().isBefore(this.moment.moment(questionnaire.dateStart))) {
+              status = QuestionnaireStatusEnum.Planned;
+            } else if (this.moment.moment().isAfter(this.moment.moment(questionnaire.dateStart)) && this.moment.moment().isBefore(this.moment.moment(questionnaire.dateEnd))) {
+              status = QuestionnaireStatusEnum.InProgress;
+            } else if (this.moment.moment().isAfter(this.moment.moment(questionnaire.dateEnd))) {
+              status = QuestionnaireStatusEnum.Passed;
+            }
+            const dateStart = this.moment.format(questionnaire.dateStart, DEFAULT_DATE_FORMAT);
+            const dateEnd = this.moment.format(questionnaire.dateEnd, DEFAULT_DATE_FORMAT);
+            return { ...questionnaire, dateEnd, dateStart, status };
+          });
           this.state = defineState(res);
         },
         e => {
@@ -48,9 +64,15 @@ export class QuestionnaireListComponent implements OnInit {
     );
   }
 
-  goToEditQuestionnaire(event: MouseEvent, questionnaireId: number): void {
-    event.stopPropagation();
+  goToEditQuestionnaire(questionnaireId: number): void {
     this.router.navigate([`questionnaire-list/edit/${questionnaireId}`]);
+  }
+
+  deleteQuestionnaire(questionnaireId: number): void {
+    this.dataService.deleteQuestionnaire(questionnaireId).subscribe(
+      () => this.getQuestionnaireList(),
+      e => alert(e.error.message || e.error),
+    );
   }
 
   goToShowOrResultQuestionnaire(questionnaire: QuestionnaireInterface): void {
@@ -73,5 +95,4 @@ export class QuestionnaireListComponent implements OnInit {
         res => this.router.navigate([`questionnaire-list/edit/${res.id}`, { questionsCount: res.questionsCount }]),
     );
   }
-
 }

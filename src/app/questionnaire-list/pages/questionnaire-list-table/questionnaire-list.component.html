@@ -1,4 +1,12 @@
-<div class="title">Опросы</div>
+<div class="header">
+  <div class="title">Опросы</div>
+  <button mat-stroked-button
+          class="mat-accent"
+          *ngIf="userService.isAdmin"
+          (click)="goToCreateQuestionnaire()">
+    Создать опрос
+  </button>
+</div>
 <mat-card>
     <component-state [state]="state" [getData]="getQuestionnaireList">
         <mat-table [dataSource]="dataService.questionnaireList" class="mat-elevation-z8">
@@ -20,19 +28,39 @@
                 <mat-cell *matCellDef="let element"> {{element.dateStart}} </mat-cell>
             </ng-container>
 
+            <ng-container matColumnDef="dateEnd">
+              <mat-header-cell *matHeaderCellDef> Дата окончания </mat-header-cell>
+              <mat-cell *matCellDef="let element"> {{element.dateEnd}} </mat-cell>
+            </ng-container>
+
             <!-- Symbol Column -->
             <ng-container matColumnDef="action">
                 <mat-header-cell *matHeaderCellDef></mat-header-cell>
                 <mat-cell *matCellDef="let element">
-                    <mat-icon *ngIf="userService.isAdmin" (click)="goToEditQuestionnaire($event, element.id)">edit</mat-icon>
+                    <button mat-icon-button *ngIf="userService.isAdmin" (click)="$event.stopPropagation()" [matMenuTriggerFor]="menu">
+                      <mat-icon>more_vert</mat-icon>
+                    </button>
+                    <mat-menu #menu="matMenu">
+                      <button mat-menu-item (click)="goToEditQuestionnaire(element.id)">
+                        <mat-icon>edit</mat-icon>
+                        <span>Редактировать</span>
+                      </button>
+                      <button mat-menu-item (click)="deleteQuestionnaire(element.id)">
+                        <mat-icon>delete</mat-icon>
+                        <span>Удалить</span>
+                      </button>
+                    </mat-menu>
                     <mat-icon *ngIf="userService.isVerified && isDateBeforeNow(element.dateStart)" (click)="passQuestionnaire(element.id)">group_add</mat-icon>
                 </mat-cell>
             </ng-container>
 
             <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
-            <mat-row (click)="goToShowOrResultQuestionnaire(row)" *matRowDef="let row; columns: displayedColumns;"></mat-row>
+            <mat-row [class.passed]="row.status === statusEnum.Passed"
+                     [class.in-progress]="row.status === statusEnum.InProgress"
+                     [class.planned]="row.status === statusEnum.Planned"
+                     [matTooltip]="row.status"
+                     (click)="goToShowOrResultQuestionnaire(row)" *matRowDef="let row; columns: displayedColumns;"></mat-row>
         </mat-table>
     </component-state>
 </mat-card>
 
-<button class="add-item-button" mat-fab *ngIf="userService.isAdmin" (click)="goToCreateQuestionnaire()"><mat-icon>add</mat-icon></button>

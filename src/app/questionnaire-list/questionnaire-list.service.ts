@@ -30,4 +30,8 @@ export class QuestionnaireListService {
   getQuestionnaireResult(): Observable<ExpertInterface[]> {
     return this.api.getQuestionnaireResult(this.questionnaireId);
   }
+
+  deleteQuestionnaire(id: number): Observable<void> {
+    return this.api.deleteQuestionnaire(id);
+  }
 }

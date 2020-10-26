@@ -44,6 +44,7 @@ export class CreateQuestionnaireComponent implements OnInit {
           ...this.questionnaireForm.value,
           questions: [],
           dateStart: this.moment.convertFromViewToRequest(this.questionnaireForm.value.dateStart),
+          dateEnd: this.moment.convertFromViewToRequest(this.questionnaireForm.value.dateEnd),
         },
     ).subscribe(
         res => this.bottomSheetRef.close({ id: res.id, questionsCount: this.questionnaireForm.value.questionsCount }),

@@ -5,4 +5,6 @@ export interface QuestionnaireInterface {
     title: string;
     questions?: QuestionInterface[];
     dateStart?: string;
+    dateEnd?: string;
+    status?: string;
 }

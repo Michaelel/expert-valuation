@@ -140,6 +140,12 @@ export class QuestionnaireEditComponent implements OnInit {
       } else {
           this.dateStartCtrl.setValue(this.moment.format(this.dataService.questionnaire.dateStart, DEFAULT_DATE_FORMAT));
       }
+      if (!this.dataService.questionnaire.dateEnd) {
+        this.dateEndCtrl.setValue(null);
+        this.dateEndCtrl.clearValidators();
+      } else {
+        this.dateEndCtrl.setValue(this.moment.format(this.dataService.questionnaire.dateEnd, DEFAULT_DATE_FORMAT));
+      }
       this.questionnaireForm.markAsPristine();
       this.hasChanges = false;
   }
