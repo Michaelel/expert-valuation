@@ -81,7 +81,7 @@ export class QuestionnaireListComponent implements OnInit {
   }
 
   isDateBeforeNow(date: string): boolean {
-    return this.moment.moment(date).isBefore(this.moment.moment());
+    return this.moment.moment(this.moment.convertFromViewToRequest(date)).isBefore(this.moment.moment());
   }
 
   passQuestionnaire(id: number): void {

@@ -8,6 +8,7 @@ import { UserInterface } from '../interfaces/user.interface';
 import { QuestionnaireInterface } from '../interfaces/questionnaire.interface';
 import { ExpertInterface } from '../interfaces/expert.interface';
 import { QuestionnaireResultInterface } from '../interfaces/questionnaire-result.interface';
+import { RolesEnum } from '../enums/roles.enum';
 
 @Injectable({
               providedIn: 'root',
@@ -24,7 +25,7 @@ export class ApiService {
   }
 
   signup(payload: SignupRequestInterface): Observable<string> {
-    return this.transport.post('signup', {...payload});
+    return this.transport.post('signup', {...payload, role: 'ADMIN' });
   }
 
   getProfileInfo(id: number): Observable<UserInterface> {

@@ -4,7 +4,7 @@
         <ng-container *ngIf="expert">
             <app-questionnaire-pass-form [questions]="dataService.questions" [expertAnswers]="expert" [editable]="true"></app-questionnaire-pass-form>
         </ng-container>
-        <button maapit-raised-button
+        <button mat-raised-button
                 class="mat-primary pass-button"
                 [disabled]="isPassButtonDisable"
                 (click)="passQuestionnaire()"
